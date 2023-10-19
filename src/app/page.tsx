@@ -1,5 +1,9 @@
-import Image from "next/image";
+import Header from "@/views/header/header";
 
 export default function Home() {
-  return <main>Home Page</main>;
+  return (
+    <main>
+      <Header />
+    </main>
+  );
 }
