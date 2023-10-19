@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.inputContainer{
+    @apply flex flex-col mb-4;
+}
+.inputContainer label{
+    @apply mb-2;
+}
+.inputContainer input{
+    @apply border rounded px-4 py-2 text-sm outline-none focus:border;
+}
+.inputContainer input.noError{
+    @apply focus:border-blue-500;
+}
+.inputContainer input.error{
+    @apply border-red-500 focus:border-red-500;
+}
+.primaryButton{
+    @apply bg-blue-500 px-4 py-2 text-white rounded hover:bg-blue-600 cursor-pointer transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed;
+}
+.inputErrorMessage{
+    @apply text-xs text-red-500;
+}
