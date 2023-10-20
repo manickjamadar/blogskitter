@@ -1,3 +1,4 @@
+import UserModel from "@/domain/models/user";
 import SigninSchema from "@/schemas/signin_schema";
 import SignupSchema from "@/schemas/signup_schema";
 import { useFormik } from "formik";
@@ -12,7 +13,7 @@ interface Props {
   isSigningup: boolean;
   onSigninClick?: () => void;
   onSignupClick?: () => void;
-  onSubmit?: (data: AuthFormData, isSigningup: boolean) => void;
+  onSubmit?: (user: UserModel) => void;
 }
 const AuthForm: React.FC<Props> = ({
   isSigningup,
@@ -34,12 +35,17 @@ const AuthForm: React.FC<Props> = ({
     isSubmitting,
     errors,
     touched,
-    isValid,
   } = useFormik({
     initialValues: initialValues,
     validationSchema: isSigningup ? SignupSchema : SigninSchema,
     onSubmit: (values, { resetForm, setSubmitting }) => {
-      onSubmit && onSubmit(values, isSigningup);
+      const id = Math.random().toString();
+      const user: UserModel = {
+        id,
+        email: values.email,
+        name: values.name || "Annonymous",
+      };
+      onSubmit && onSubmit(user);
       setSubmitting(false);
       resetForm();
     },

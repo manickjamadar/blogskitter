@@ -8,8 +8,7 @@ interface UseAuthReturnType {
   isLoggedOut: boolean;
   user?: UserModel;
   logout: () => void;
-  signup: (user: UserModel) => void;
-  signin: (user: UserModel) => void;
+  login: (user: UserModel) => void;
 }
 const useAuth = (): UseAuthReturnType => {
   const dispatch = useAppDispatch();
@@ -19,19 +18,15 @@ const useAuth = (): UseAuthReturnType => {
   const logout = () => {
     dispatch(AuthActions.logout());
   };
-  const signup = (user: UserModel) => {
-    dispatch(AuthActions.signup({ user }));
-  };
-  const signin = (user: UserModel) => {
-    dispatch(AuthActions.signin({ user }));
+  const login = (user: UserModel) => {
+    dispatch(AuthActions.login({ user }));
   };
   return {
     isLoggedIn,
     isLoggedOut,
     user,
     logout,
-    signup,
-    signin,
+    login,
   };
 };
 export default useAuth;

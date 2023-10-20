@@ -1,13 +1,13 @@
 "use client";
 import React from "react";
 import Modal from "../modal/modal";
-import AuthForm, { AuthFormData } from "../auth_form/auth_form";
+import AuthForm from "../auth_form/auth_form";
 import UserModel from "@/domain/models/user";
 import useAuth from "@/hooks/use_auth";
 import useAuthModal from "@/hooks/use_auth_modal";
 
 const Header = () => {
-  const { isLoggedIn, isLoggedOut, user, logout, signup, signin } = useAuth();
+  const { isLoggedIn, isLoggedOut, user, logout, login } = useAuth();
   const {
     isSigningup,
     closeModal,
@@ -15,18 +15,8 @@ const Header = () => {
     openSignupModal,
     isModalOpen,
   } = useAuthModal();
-  const handleAuthSubmit = (data: AuthFormData, isSigningup: boolean) => {
-    const id = Math.random().toString();
-    const user: UserModel = {
-      id,
-      email: data.email,
-      name: data.name || "Annonymous",
-    };
-    if (isSigningup) {
-      signup(user);
-    } else {
-      signin(user);
-    }
+  const handleAuthSubmit = (user: UserModel) => {
+    login(user);
     closeModal();
   };
   return (
