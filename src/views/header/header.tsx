@@ -1,48 +1,62 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import Modal from "../modal/modal";
 import AuthForm, { AuthFormData } from "../auth_form/auth_form";
+import UserModel from "@/domain/models/user";
+import useAuth from "@/hooks/use_auth";
+import useAuthModal from "@/hooks/use_auth_modal";
 
 const Header = () => {
-  // Auth Modal State => 0 for close, 1 for Signin, 2 for Signup
-  const [authModalState, setAuthModalState] = useState(0);
-  const openSigninModal = () => {
-    setAuthModalState(1);
+  const { isLoggedIn, isLoggedOut, user, logout, signup, signin } = useAuth();
+  const {
+    isSigningup,
+    closeModal,
+    openSigninModal,
+    openSignupModal,
+    isModalOpen,
+  } = useAuthModal();
+  const handleAuthSubmit = (data: AuthFormData, isSigningup: boolean) => {
+    const id = Math.random().toString();
+    const user: UserModel = {
+      id,
+      email: data.email,
+      name: data.name || "Annonymous",
+    };
+    if (isSigningup) {
+      signup(user);
+    } else {
+      signin(user);
+    }
+    closeModal();
   };
-  const openSignupModal = () => {
-    setAuthModalState(2);
-  };
-  const closeAuthModal = () => {
-    setAuthModalState(0);
-  };
-  const handleAuthSubmit = (data: AuthFormData, isSignup: boolean) => {
-    console.log("Auth Form Data: ", data);
-  };
-  const isModalOpen = authModalState !== 0;
-  //   const isSigninModalOpen = authModalState === 1;
-  const isSignupModalOpen = authModalState === 2;
   return (
     <>
       <div className="flex justify-between p-4 border-b-2 items-center">
-        <h1 className="text-xl">Blogskitter Manick lala</h1>
-        <div className="flex gap-6">
-          <button
-            className="border border-blue-500 px-4 py-2 rounded"
-            onClick={openSigninModal}
-          >
-            Sign In
-          </button>
-          <button
-            className="bg-blue-500 text-white px-4 py-2 rounded"
-            onClick={openSignupModal}
-          >
-            Sign Up
-          </button>
+        <h1 className="text-xl">Blogskitter</h1>
+        <div className="flex gap-6 items-center">
+          {isLoggedOut && (
+            <>
+              <button className="outlineButton" onClick={openSigninModal}>
+                Sign In
+              </button>
+              <button className="primaryButton" onClick={openSignupModal}>
+                Sign Up
+              </button>
+            </>
+          )}
+          {isLoggedIn && (
+            <>
+              {user && <p>{user.name}</p>}
+              <button className="primaryButton" onClick={logout}>
+                Log Out
+              </button>
+            </>
+          )}
         </div>
       </div>
-      <Modal isOpen={isModalOpen} onClose={closeAuthModal}>
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
         <AuthForm
-          isSignup={isSignupModalOpen}
+          isSigningup={isSigningup}
           onSigninClick={openSigninModal}
           onSignupClick={openSignupModal}
           onSubmit={handleAuthSubmit}
