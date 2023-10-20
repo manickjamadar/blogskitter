@@ -3,19 +3,19 @@ import SignupSchema from "@/schemas/signup_schema";
 import { useFormik } from "formik";
 import React from "react";
 export interface AuthFormData {
-  name: string;
+  name?: string;
   email: string;
   password: string;
-  confirmPassword: string;
+  confirmPassword?: string;
 }
 interface Props {
-  isSignup: boolean;
+  isSigningup: boolean;
   onSigninClick?: () => void;
   onSignupClick?: () => void;
-  onSubmit?: (data: AuthFormData, isSignup: boolean) => void;
+  onSubmit?: (data: AuthFormData, isSigningup: boolean) => void;
 }
 const AuthForm: React.FC<Props> = ({
-  isSignup,
+  isSigningup,
   onSigninClick,
   onSignupClick,
   onSubmit,
@@ -37,9 +37,9 @@ const AuthForm: React.FC<Props> = ({
     isValid,
   } = useFormik({
     initialValues: initialValues,
-    validationSchema: isSignup ? SignupSchema : SigninSchema,
+    validationSchema: isSigningup ? SignupSchema : SigninSchema,
     onSubmit: (values, { resetForm, setSubmitting }) => {
-      onSubmit && onSubmit(values, isSignup);
+      onSubmit && onSubmit(values, isSigningup);
       setSubmitting(false);
       resetForm();
     },
@@ -48,10 +48,10 @@ const AuthForm: React.FC<Props> = ({
     <div className="p-10">
       <h1 className="text-center text-xl">BlogSkitter</h1>
       <p className="text-center mb-4 mt-2 text-sm">
-        {isSignup ? "Create your account" : "Sign In to your account"}
+        {isSigningup ? "Create your account" : "Sign In to your account"}
       </p>
       <form className="mb-4" onSubmit={handleSubmit}>
-        {isSignup && (
+        {isSigningup && (
           <div className="inputContainer">
             <label htmlFor="name">Name</label>
             <input
@@ -103,7 +103,7 @@ const AuthForm: React.FC<Props> = ({
             <p className="inputErrorMessage mt-1">{errors.password}</p>
           )}
         </div>
-        {isSignup && (
+        {isSigningup && (
           <div className="inputContainer">
             <label htmlFor="confirmPassword">Confirm Password</label>
             <input
@@ -130,20 +130,20 @@ const AuthForm: React.FC<Props> = ({
           className="primaryButton w-full"
           disabled={isSubmitting}
         >
-          {isSignup ? "Sign Up" : "Sign In"}
+          {isSigningup ? "Sign Up" : "Sign In"}
         </button>
       </form>
       <p className="text-center text-sm">
-        {isSignup ? "Already" : "Don't"} have an account?{" "}
+        {isSigningup ? "Already" : "Don't"} have an account?{" "}
         <span
           className="cursor-pointer text-blue-500"
           onClick={() =>
-            isSignup
+            isSigningup
               ? onSigninClick && onSigninClick()
               : onSignupClick && onSignupClick()
           }
         >
-          {isSignup ? "Sign In" : "Sign Up"}
+          {isSigningup ? "Sign In" : "Sign Up"}
         </span>
       </p>
     </div>
