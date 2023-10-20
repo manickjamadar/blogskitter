@@ -1,8 +1,15 @@
+import { auth } from "@/config/firebase";
+import AuthError, { AuthErrorCode } from "@/domain/error/auth_error";
 import UserModel from "@/domain/models/user";
 import SigninSchema from "@/schemas/signin_schema";
 import SignupSchema from "@/schemas/signup_schema";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
 import { useFormik } from "formik";
-import React from "react";
+import React, { useState } from "react";
 export interface AuthFormData {
   name?: string;
   email: string;
@@ -21,6 +28,37 @@ const AuthForm: React.FC<Props> = ({
   onSignupClick,
   onSubmit,
 }) => {
+  const [errorMessage, setErrorMessage] = useState("");
+  const handleSignup = async ({
+    name,
+    email,
+    password,
+  }: {
+    email: string;
+    name: string;
+    password: string;
+  }): Promise<UserModel> => {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    await updateProfile(userCredential.user, { displayName: name });
+    return { id: userCredential.user.uid, email, name };
+  };
+  const handleSignin = async ({
+    email,
+    password,
+  }: {
+    email: string;
+    password: string;
+  }): Promise<UserModel> => {
+    const { user } = await signInWithEmailAndPassword(auth, email, password);
+    if (!user.email || !user.displayName) {
+      throw new AuthError(AuthErrorCode.invalidUser);
+    }
+    return { id: user.uid, email: user.email, name: user.displayName };
+  };
   const initialValues: AuthFormData = {
     name: "",
     email: "",
@@ -38,16 +76,28 @@ const AuthForm: React.FC<Props> = ({
   } = useFormik({
     initialValues: initialValues,
     validationSchema: isSigningup ? SignupSchema : SigninSchema,
-    onSubmit: (values, { resetForm, setSubmitting }) => {
-      const id = Math.random().toString();
-      const user: UserModel = {
-        id,
-        email: values.email,
-        name: values.name || "Annonymous",
-      };
-      onSubmit && onSubmit(user);
-      setSubmitting(false);
-      resetForm();
+    onSubmit: async (values, { resetForm, setSubmitting }) => {
+      let newUser: UserModel;
+      setErrorMessage("");
+      try {
+        if (isSigningup) {
+          newUser = await handleSignup({
+            ...values,
+            name: values.name || "Annonymous",
+          });
+        } else {
+          newUser = await handleSignin(values);
+        }
+        onSubmit && onSubmit(newUser);
+        resetForm();
+        setErrorMessage("");
+      } catch (error) {
+        const errorCode = (error as any).code || AuthErrorCode.unknown;
+        const authError = new AuthError(errorCode);
+        setErrorMessage(authError.message);
+      } finally {
+        setSubmitting(false);
+      }
     },
   });
   return (
@@ -56,7 +106,12 @@ const AuthForm: React.FC<Props> = ({
       <p className="text-center mb-4 mt-2 text-sm">
         {isSigningup ? "Create your account" : "Sign In to your account"}
       </p>
-      <form className="mb-4" onSubmit={handleSubmit}>
+      <form className="mb-4 flex flex-col gap-4" onSubmit={handleSubmit}>
+        {errorMessage && (
+          <p className="bg-red-400 text-white rounded text-sm px-4 py-2">
+            {errorMessage}
+          </p>
+        )}
         {isSigningup && (
           <div className="inputContainer">
             <label htmlFor="name">Name</label>
@@ -143,11 +198,12 @@ const AuthForm: React.FC<Props> = ({
         {isSigningup ? "Already" : "Don't"} have an account?{" "}
         <span
           className="cursor-pointer text-blue-500"
-          onClick={() =>
+          onClick={() => {
             isSigningup
               ? onSigninClick && onSigninClick()
-              : onSignupClick && onSignupClick()
-          }
+              : onSignupClick && onSignupClick();
+            setErrorMessage("");
+          }}
         >
           {isSigningup ? "Sign In" : "Sign Up"}
         </span>
