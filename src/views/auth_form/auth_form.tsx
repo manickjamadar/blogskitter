@@ -10,6 +10,7 @@ import {
 } from "firebase/auth";
 import { useFormik } from "formik";
 import React, { useState } from "react";
+import GoogleAuthButton from "../google_auth_button/google_auth_button";
 export interface AuthFormData {
   name?: string;
   email: string;
@@ -103,7 +104,7 @@ const AuthForm: React.FC<Props> = ({
   return (
     <div className="p-10">
       <h1 className="text-center text-xl">BlogSkitter</h1>
-      <p className="text-center mb-4 mt-2 text-sm">
+      <p className="text-center mb-4 mt-2 text-sm text-gray-500">
         {isSigningup ? "Create your account" : "Sign In to your account"}
       </p>
       <form className="mb-4 flex flex-col gap-4" onSubmit={handleSubmit}>
@@ -194,20 +195,26 @@ const AuthForm: React.FC<Props> = ({
           {isSigningup ? "Sign Up" : "Sign In"}
         </button>
       </form>
-      <p className="text-center text-sm">
-        {isSigningup ? "Already" : "Don't"} have an account?{" "}
-        <span
-          className="cursor-pointer text-blue-500"
-          onClick={() => {
-            isSigningup
-              ? onSigninClick && onSigninClick()
-              : onSignupClick && onSignupClick();
-            setErrorMessage("");
-          }}
-        >
-          {isSigningup ? "Sign In" : "Sign Up"}
-        </span>
-      </p>
+      <div className="flex flex-col gap-2">
+        <p className="text-center text-sm text-gray-600">
+          {isSigningup ? "Already" : "Don't"} have an account?{" "}
+          <span
+            className="cursor-pointer text-blue-500"
+            onClick={() => {
+              isSigningup
+                ? onSigninClick && onSigninClick()
+                : onSignupClick && onSignupClick();
+              setErrorMessage("");
+            }}
+          >
+            {isSigningup ? "Sign In" : "Sign Up"}
+          </span>
+        </p>
+        <p className="text-sm text-center text-gray-500">Or</p>
+        <GoogleAuthButton>
+          {isSigningup ? "Sign Up" : "Sign In"} With Google
+        </GoogleAuthButton>
+      </div>
     </div>
   );
 };
