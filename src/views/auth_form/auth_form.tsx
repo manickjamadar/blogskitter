@@ -4,8 +4,12 @@ import UserModel from "@/domain/models/user";
 import SigninSchema from "@/schemas/signin_schema";
 import SignupSchema from "@/schemas/signup_schema";
 import {
+  GoogleAuthProvider,
   createUserWithEmailAndPassword,
+  getRedirectResult,
   signInWithEmailAndPassword,
+  signInWithPopup,
+  signInWithRedirect,
   updateProfile,
 } from "firebase/auth";
 import { useFormik } from "formik";
@@ -59,6 +63,14 @@ const AuthForm: React.FC<Props> = ({
       throw new AuthError(AuthErrorCode.invalidUser);
     }
     return { id: user.uid, email: user.email, name: user.displayName };
+  };
+  const handleGoogleLogin = async () => {
+    try {
+      await signInWithRedirect(auth, new GoogleAuthProvider());
+    } catch (error) {
+      const authError = new AuthError(AuthErrorCode.googleAuthenticationFailed);
+      setErrorMessage(authError.message);
+    }
   };
   const initialValues: AuthFormData = {
     name: "",
@@ -211,7 +223,7 @@ const AuthForm: React.FC<Props> = ({
           </span>
         </p>
         <p className="text-sm text-center text-gray-500">Or</p>
-        <GoogleAuthButton>
+        <GoogleAuthButton onClick={handleGoogleLogin}>
           {isSigningup ? "Sign Up" : "Sign In"} With Google
         </GoogleAuthButton>
       </div>
