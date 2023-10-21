@@ -2,12 +2,13 @@
 import React from "react";
 import Modal from "../modal/modal";
 import AuthForm from "../auth_form/auth_form";
-import UserModel from "@/domain/models/user";
 import useAuth from "@/hooks/use_auth";
 import useAuthModal from "@/hooks/use_auth_modal";
+import { signOut } from "firebase/auth";
+import { auth } from "@/config/firebase";
 
 const Header = () => {
-  const { isLoggedIn, isLoggedOut, user, logout, login } = useAuth();
+  const { isLoggedIn, isLoggedOut, user } = useAuth();
   const {
     isSigningup,
     closeModal,
@@ -15,9 +16,12 @@ const Header = () => {
     openSignupModal,
     isModalOpen,
   } = useAuthModal();
-  const handleAuthSubmit = (user: UserModel) => {
-    login(user);
-    closeModal();
+  const handleLogOut = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.log("Logout failed");
+    }
   };
   return (
     <>
@@ -37,7 +41,7 @@ const Header = () => {
           {isLoggedIn && (
             <>
               {user && <p>{user.name}</p>}
-              <button className="primaryButton" onClick={logout}>
+              <button className="primaryButton" onClick={handleLogOut}>
                 Log Out
               </button>
             </>
@@ -49,7 +53,7 @@ const Header = () => {
           isSigningup={isSigningup}
           onSigninClick={openSigninModal}
           onSignupClick={openSignupModal}
-          onSubmit={handleAuthSubmit}
+          onSubmit={closeModal}
         />
       </Modal>
     </>
