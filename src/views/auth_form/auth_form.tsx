@@ -6,7 +6,6 @@ import SignupSchema from "@/schemas/signup_schema";
 import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
-  getRedirectResult,
   signInWithEmailAndPassword,
   signInWithPopup,
   signInWithRedirect,
@@ -15,6 +14,7 @@ import {
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import GoogleAuthButton from "../google_auth_button/google_auth_button";
+import { firebaseAuthService } from "@/services";
 export interface AuthFormData {
   name?: string;
   email: string;
@@ -65,11 +65,9 @@ const AuthForm: React.FC<Props> = ({
     return { id: user.uid, email: user.email, name: user.displayName };
   };
   const handleGoogleLogin = async () => {
-    try {
-      await signInWithRedirect(auth, new GoogleAuthProvider());
-    } catch (error) {
-      const authError = new AuthError(AuthErrorCode.googleAuthenticationFailed);
-      setErrorMessage(authError.message);
+    const error = await firebaseAuthService.loginWithGoogle();
+    if (error) {
+      setErrorMessage(error.message);
     }
   };
   const initialValues: AuthFormData = {
