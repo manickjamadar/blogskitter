@@ -3,11 +3,13 @@ export const AuthErrorCode = {
   emailAlredyInUse: "auth/email-already-in-use",
   invalidUser: "auth/invalid-user",
   unknown: "auth/unknown-error",
+  googleAuthenticationFailed: "auth/google-authenticaiton-failed",
 };
 const errorMessages = {
   [AuthErrorCode.invalidLoginCredentials]: "Email or Password is incorrect",
   [AuthErrorCode.emailAlredyInUse]: "User is already registered",
   [AuthErrorCode.invalidUser]: "User is invalid",
+  [AuthErrorCode.googleAuthenticationFailed]: "Google Authentication Failed",
   [AuthErrorCode.unknown]: "Something Went Wrong",
 };
 class AuthError extends Error {
