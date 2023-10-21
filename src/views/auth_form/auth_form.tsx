@@ -3,14 +3,6 @@ import AuthError, { AuthErrorCode } from "@/domain/error/auth_error";
 import UserModel from "@/domain/models/user";
 import SigninSchema from "@/schemas/signin_schema";
 import SignupSchema from "@/schemas/signup_schema";
-import {
-  GoogleAuthProvider,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  signInWithRedirect,
-  updateProfile,
-} from "firebase/auth";
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import GoogleAuthButton from "../google_auth_button/google_auth_button";
@@ -34,36 +26,6 @@ const AuthForm: React.FC<Props> = ({
   onSubmit,
 }) => {
   const [errorMessage, setErrorMessage] = useState("");
-  const handleSignup = async ({
-    name,
-    email,
-    password,
-  }: {
-    email: string;
-    name: string;
-    password: string;
-  }): Promise<UserModel> => {
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-    await updateProfile(userCredential.user, { displayName: name });
-    return { id: userCredential.user.uid, email, name };
-  };
-  const handleSignin = async ({
-    email,
-    password,
-  }: {
-    email: string;
-    password: string;
-  }): Promise<UserModel> => {
-    const { user } = await signInWithEmailAndPassword(auth, email, password);
-    if (!user.email || !user.displayName) {
-      throw new AuthError(AuthErrorCode.invalidUser);
-    }
-    return { id: user.uid, email: user.email, name: user.displayName };
-  };
   const handleGoogleLogin = async () => {
     const error = await firebaseAuthService.loginWithGoogle();
     if (error) {
@@ -88,27 +50,24 @@ const AuthForm: React.FC<Props> = ({
     initialValues: initialValues,
     validationSchema: isSigningup ? SignupSchema : SigninSchema,
     onSubmit: async (values, { resetForm, setSubmitting }) => {
-      let newUser: UserModel;
+      let userOrError: UserModel | AuthError;
       setErrorMessage("");
-      try {
-        if (isSigningup) {
-          newUser = await handleSignup({
-            ...values,
-            name: values.name || "Annonymous",
-          });
-        } else {
-          newUser = await handleSignin(values);
-        }
-        onSubmit && onSubmit(newUser);
+      if (isSigningup) {
+        userOrError = await firebaseAuthService.signup({
+          ...values,
+          name: values.name || "Annonymous",
+        });
+      } else {
+        userOrError = await firebaseAuthService.signin(values);
+      }
+      if (userOrError instanceof AuthError) {
+        setErrorMessage(userOrError.message);
+      } else {
         resetForm();
         setErrorMessage("");
-      } catch (error) {
-        const errorCode = (error as any).code || AuthErrorCode.unknown;
-        const authError = new AuthError(errorCode);
-        setErrorMessage(authError.message);
-      } finally {
-        setSubmitting(false);
+        onSubmit && onSubmit(userOrError);
       }
+      setSubmitting(false);
     },
   });
   return (
