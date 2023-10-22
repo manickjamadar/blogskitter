@@ -36,3 +36,4 @@ yarn-error.log*
 next-env.d.ts
 
 blogskitter-firebase-admin-cert.json
+blogskitter-prod-firebase-admin-cert.json
