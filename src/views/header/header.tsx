@@ -20,7 +20,7 @@ const Header = () => {
   };
   return (
     <>
-      <div className="flex justify-between p-4 border-b-2 items-center">
+      <header className="flex justify-between p-4 border-b-2 items-center">
         <h1 className="text-xl">Blogskitter</h1>
         <div className="flex gap-6 items-center">
           {isLoggedOut && (
@@ -42,7 +42,7 @@ const Header = () => {
             </>
           )}
         </div>
-      </div>
+      </header>
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <AuthForm
           isSigningup={isSigningup}
