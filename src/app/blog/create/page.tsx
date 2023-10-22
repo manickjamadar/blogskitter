@@ -4,6 +4,7 @@ import BlogFormBodySchema from "@/schemas/blog_form_body_schema";
 import { BlogPostBody } from "@/schemas/blog_post_body_schema";
 import { authService, blogService } from "@/services";
 import InputField from "@/views/input_field/input_field";
+import ProtectedPage from "@/views/protected_page/protected_page";
 import { useFormik } from "formik";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -61,40 +62,46 @@ const CreateBlogPage = () => {
     },
   });
   return (
-    <div>
-      <h2>Create Blog Post</h2>
-      <form onSubmit={handleSubmit}>
-        {errorMessage && (
-          <p className="bg-red-400 text-white rounded text-sm px-4 py-2">
-            {errorMessage}
-          </p>
-        )}
-        <InputField
-          id="title"
-          placeholder="Write down the blog title"
-          onChange={handleChange}
-          onBlur={handleBlur}
-          value={values.title}
-          errorMessage={errors.title}
-          touched={touched.title}
-          label="Title"
-        />
-        <InputField
-          id="description"
-          placeholder="Enter blog description"
-          onChange={handleChange}
-          onBlur={handleBlur}
-          value={values.description}
-          errorMessage={errors.description}
-          touched={touched.description}
-          label="Description"
-        />
-        <button className="outlineButton">Cancel</button>
-        <button className="primaryButton" disabled={isSubmitting} type="submit">
-          Save
-        </button>
-      </form>
-    </div>
+    <ProtectedPage>
+      <div>
+        <h2>Create Blog Post</h2>
+        <form onSubmit={handleSubmit}>
+          {errorMessage && (
+            <p className="bg-red-400 text-white rounded text-sm px-4 py-2">
+              {errorMessage}
+            </p>
+          )}
+          <InputField
+            id="title"
+            placeholder="Write down the blog title"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.title}
+            errorMessage={errors.title}
+            touched={touched.title}
+            label="Title"
+          />
+          <InputField
+            id="description"
+            placeholder="Enter blog description"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.description}
+            errorMessage={errors.description}
+            touched={touched.description}
+            label="Description"
+          />
+          <button className="outlineButton">Cancel</button>
+          <button
+            className="primaryButton"
+            disabled={isSubmitting}
+            type="submit"
+          >
+            Save
+          </button>
+        </form>
+      </div>
+    </ProtectedPage>
   );
 };
 
