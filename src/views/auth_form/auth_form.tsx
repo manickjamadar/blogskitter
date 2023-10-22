@@ -86,6 +86,7 @@ const AuthForm: React.FC<Props> = ({
         {isSigningup && (
           <InputField
             id="name"
+            label="Name"
             placeholder="Enter your name"
             onChange={handleChange}
             onBlur={handleBlur}
@@ -97,6 +98,7 @@ const AuthForm: React.FC<Props> = ({
         <InputField
           id="email"
           type="email"
+          label="Email"
           placeholder="Enter your email"
           onChange={handleChange}
           onBlur={handleBlur}
@@ -107,6 +109,7 @@ const AuthForm: React.FC<Props> = ({
         <InputField
           id="password"
           type="password"
+          label="Password"
           placeholder="Enter your password"
           onChange={handleChange}
           onBlur={handleBlur}
@@ -118,6 +121,7 @@ const AuthForm: React.FC<Props> = ({
           <InputField
             id="confirmPassword"
             type="password"
+            label="Confirm Password"
             placeholder="Enter the password again"
             onChange={handleChange}
             onBlur={handleBlur}

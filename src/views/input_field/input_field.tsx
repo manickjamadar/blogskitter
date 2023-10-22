@@ -8,6 +8,7 @@ interface Props {
   errorMessage?: string | undefined;
   touched?: boolean | undefined;
   value?: string;
+  label?: string;
 }
 const InputField: React.FC<Props> = ({
   id,
@@ -18,10 +19,11 @@ const InputField: React.FC<Props> = ({
   touched,
   type = "text",
   value,
+  label,
 }) => {
   return (
     <div className="inputContainer">
-      <label htmlFor={id}>Name</label>
+      {label && <label htmlFor={id}>{label}</label>}
       <input
         type={type}
         id={id}
