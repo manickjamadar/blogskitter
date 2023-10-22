@@ -86,7 +86,7 @@ const AuthForm: React.FC<Props> = ({
           <div className="inputContainer">
             <label htmlFor="name">Name</label>
             <input
-              type="name"
+              type="text"
               id="name"
               name="name"
               placeholder="Enter your name"
