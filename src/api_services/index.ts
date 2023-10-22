@@ -3,4 +3,7 @@ import FirebaseApiBlogService from "./api_blog_service/firebase_api_blog_service
 
 const firebaseApiAuthService = new FirebaseApiAuthService();
 const firebaseApiBlogService = new FirebaseApiBlogService();
-export { firebaseApiAuthService, firebaseApiBlogService };
+export {
+  firebaseApiAuthService as apiAuthService,
+  firebaseApiBlogService as apiBlogService,
+};

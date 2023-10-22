@@ -3,7 +3,7 @@ import BlogPostBodySchema, {
   BlogPostBody,
 } from "@/schemas/blog_post_body_schema";
 import ApiErrorHandler from "../api_error_handler";
-import { firebaseApiAuthService, firebaseApiBlogService } from "@/api_services";
+import { apiAuthService, apiBlogService } from "@/api_services";
 
 const createBlogController = async (req: Request) => {
   try {
@@ -14,12 +14,12 @@ const createBlogController = async (req: Request) => {
     //get user id from token
     const authToken = req.headers.get("authorization");
     const token = authToken && authToken.split(" ")[1];
-    const uidOrError = await firebaseApiAuthService.getUserId(token);
+    const uidOrError = await apiAuthService.getUserId(token);
     if (uidOrError instanceof ApiError) {
       throw uidOrError;
     }
     //save the blog to firebase
-    const blogOrError = await firebaseApiBlogService.createBlog(
+    const blogOrError = await apiBlogService.createBlog(
       validatedData,
       uidOrError
     );

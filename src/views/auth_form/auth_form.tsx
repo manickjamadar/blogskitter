@@ -6,7 +6,7 @@ import SignupSchema from "@/schemas/signup_schema";
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import GoogleAuthButton from "../google_auth_button/google_auth_button";
-import { firebaseAuthService } from "@/services";
+import { authService } from "@/services";
 export interface AuthFormData {
   name?: string;
   email: string;
@@ -27,7 +27,7 @@ const AuthForm: React.FC<Props> = ({
 }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const handleGoogleLogin = async () => {
-    const error = await firebaseAuthService.loginWithGoogle();
+    const error = await authService.loginWithGoogle();
     if (error) {
       setErrorMessage(error.message);
     }
@@ -53,12 +53,12 @@ const AuthForm: React.FC<Props> = ({
       let userOrError: UserModel | AuthError;
       setErrorMessage("");
       if (isSigningup) {
-        userOrError = await firebaseAuthService.signup({
+        userOrError = await authService.signup({
           ...values,
           name: values.name || "Annonymous",
         });
       } else {
-        userOrError = await firebaseAuthService.signin(values);
+        userOrError = await authService.signin(values);
       }
       if (userOrError instanceof AuthError) {
         setErrorMessage(userOrError.message);

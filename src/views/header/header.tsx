@@ -4,7 +4,7 @@ import Modal from "../modal/modal";
 import AuthForm from "../auth_form/auth_form";
 import useAuth from "@/hooks/use_auth";
 import useAuthModal from "@/hooks/use_auth_modal";
-import { firebaseAuthService } from "@/services";
+import { authService } from "@/services";
 
 const Header = () => {
   const { isLoggedIn, isLoggedOut, user } = useAuth();
@@ -16,7 +16,7 @@ const Header = () => {
     isModalOpen,
   } = useAuthModal();
   const handleLogOut = () => {
-    firebaseAuthService.signout();
+    authService.signout();
   };
   return (
     <>
