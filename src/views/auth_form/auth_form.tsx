@@ -7,6 +7,7 @@ import { useFormik } from "formik";
 import React, { useState } from "react";
 import GoogleAuthButton from "../google_auth_button/google_auth_button";
 import { authService } from "@/services";
+import InputField from "../input_field/input_field";
 export interface AuthFormData {
   name?: string;
   email: string;
@@ -83,78 +84,47 @@ const AuthForm: React.FC<Props> = ({
           </p>
         )}
         {isSigningup && (
-          <div className="inputContainer">
-            <label htmlFor="name">Name</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              placeholder="Enter your name"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.name}
-              className={`${errors.name && touched.name ? "error" : "noError"}`}
-            />
-            {errors.name && touched.name && (
-              <p className="inputErrorMessage mt-1">{errors.name}</p>
-            )}
-          </div>
+          <InputField
+            id="name"
+            placeholder="Enter your name"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.name}
+            errorMessage={errors.name}
+            touched={touched.name}
+          />
         )}
-        <div className="inputContainer">
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="Enter your email"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.email}
-            className={`${errors.email && touched.email ? "error" : "noError"}`}
-          />
-          {errors.email && touched.email && (
-            <p className="inputErrorMessage mt-1">{errors.email}</p>
-          )}
-        </div>
-        <div className="inputContainer">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Enter your password"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.password}
-            className={`${
-              errors.password && touched.password ? "error" : "noError"
-            }`}
-          />
-          {errors.password && touched.password && (
-            <p className="inputErrorMessage mt-1">{errors.password}</p>
-          )}
-        </div>
+        <InputField
+          id="email"
+          type="email"
+          placeholder="Enter your email"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.email}
+          errorMessage={errors.email}
+          touched={touched.email}
+        />
+        <InputField
+          id="password"
+          type="password"
+          placeholder="Enter your password"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.password}
+          errorMessage={errors.password}
+          touched={touched.password}
+        />
         {isSigningup && (
-          <div className="inputContainer">
-            <label htmlFor="confirmPassword">Confirm Password</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              placeholder="Confirm your password"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.confirmPassword}
-              className={`${
-                errors.confirmPassword && touched.confirmPassword
-                  ? "error"
-                  : "noError"
-              }`}
-            />
-            {errors.confirmPassword && touched.confirmPassword && (
-              <p className="inputErrorMessage mt-1">{errors.confirmPassword}</p>
-            )}
-          </div>
+          <InputField
+            id="confirmPassword"
+            type="password"
+            placeholder="Enter the password again"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.confirmPassword}
+            errorMessage={errors.confirmPassword}
+            touched={touched.confirmPassword}
+          />
         )}
         <button
           type="submit"
