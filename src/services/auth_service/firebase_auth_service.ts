@@ -12,6 +12,17 @@ import { auth } from "@/config/firebase";
 import UserModel from "@/domain/models/user";
 
 class FirebaseAuthService implements IAuthService {
+  async getUserToken(): Promise<string | AuthError> {
+    try {
+      const token = await auth.currentUser?.getIdToken();
+      if (!token) {
+        throw new Error("error");
+      }
+      return token;
+    } catch (error) {
+      return new AuthError(AuthErrorCode.invalidUser);
+    }
+  }
   async signup(data: {
     name: string;
     email: string;

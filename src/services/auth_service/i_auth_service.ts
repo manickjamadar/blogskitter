@@ -13,5 +13,6 @@ abstract class IAuthService {
     email: string;
     password: string;
   }): Promise<UserModel | AuthError>;
+  abstract getUserToken(): Promise<string | AuthError>;
 }
 export default IAuthService;
