@@ -5,8 +5,12 @@ import AuthForm from "../auth_form/auth_form";
 import useAuth from "@/hooks/use_auth";
 import useAuthModal from "@/hooks/use_auth_modal";
 import { authService } from "@/services";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Header = () => {
+  const pathname = usePathname();
+  const isCreateBlogPath = pathname === "/blog/create";
   const { isLoggedIn, isLoggedOut, user } = useAuth();
   const {
     isSigningup,
@@ -21,7 +25,9 @@ const Header = () => {
   return (
     <>
       <header className="flex justify-between p-4 border-b-2 items-center">
-        <h1 className="text-xl">Blogskitter</h1>
+        <h1 className="text-xl">
+          <Link href="/">Blogskitter</Link>
+        </h1>
         <div className="flex gap-6 items-center">
           {isLoggedOut && (
             <>
@@ -36,6 +42,11 @@ const Header = () => {
           {isLoggedIn && (
             <>
               {user && <p>{user.name}</p>}
+              {!isCreateBlogPath && (
+                <Link href="/blog/create" className="outlineButton">
+                  Create
+                </Link>
+              )}
               <button className="primaryButton" onClick={handleLogOut}>
                 Log Out
               </button>
