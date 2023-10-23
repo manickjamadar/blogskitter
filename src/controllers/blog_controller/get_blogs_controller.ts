@@ -2,6 +2,7 @@ import { apiBlogService } from "@/api_services";
 import { NextRequest, NextResponse } from "next/server";
 import ApiErrorHandler from "../api_error_handler";
 import ApiError from "@/domain/error/api_error";
+import GetBlogsResponseBody from "@/domain/response_bodies/blog/get_blogs_response_body";
 
 const getBlogsController = async (req: NextRequest) => {
   try {
@@ -13,11 +14,9 @@ const getBlogsController = async (req: NextRequest) => {
     if (blogsOrError instanceof ApiError) {
       throw blogsOrError;
     }
-    return NextResponse.json({
+    return NextResponse.json<GetBlogsResponseBody>({
       blogs: blogsOrError,
     });
-    // fetch blogs
-    // return blog
   } catch (error) {
     return ApiErrorHandler(error, "Fetching blogs failed");
   }
