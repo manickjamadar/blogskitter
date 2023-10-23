@@ -1,17 +1,14 @@
 "use client";
 
 import config from "@/domain/config";
+import BlogsSelector from "@/store/selectors/blogs_selector";
 import { BlogsActions } from "@/store/slices/blogs_slice";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 
 export default function HomePage() {
   const dispatch = useAppDispatch();
-  const isBlogsFetching = useAppSelector(
-    (state) => state.blogs.state === "fetching"
-  );
-  const canFetchMoreBlogs = useAppSelector(
-    (state) => state.blogs.canFetchMore && state.blogs.state === "fetched"
-  );
+  const isBlogsFetching = useAppSelector(BlogsSelector.isBlogsFetching);
+  const canFetchMoreBlogs = useAppSelector(BlogsSelector.canFetchMoreBlogs);
   const handleFetchMoreBlogs = () => {
     dispatch(
       BlogsActions.fetchBlogs({
