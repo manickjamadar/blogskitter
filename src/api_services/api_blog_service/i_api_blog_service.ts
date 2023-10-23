@@ -7,5 +7,9 @@ abstract class IApiBlogService {
     blogData: BlogPostBody,
     userId: string
   ): Promise<IBlogModel | ApiError>;
+  abstract findBlogs(
+    limit: number,
+    skip: number
+  ): Promise<IBlogModel[] | ApiError>;
 }
 export default IApiBlogService;

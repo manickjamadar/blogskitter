@@ -8,6 +8,27 @@ class FirebaseApiBlogService implements IApiBlogService {
   static getCollection = () => {
     return adminFirestore.collection("blog");
   };
+  async findBlogs(
+    limit: number,
+    skip: number
+  ): Promise<ApiError | IBlogModel[]> {
+    try {
+      const blogsRef = FirebaseApiBlogService.getCollection();
+      const query = blogsRef
+        .orderBy("createdDate", "desc")
+        .offset(skip)
+        .limit(limit);
+      const snapshot = await query.get();
+      const blogs: IBlogModel[] = [];
+      snapshot.docs.forEach((doc) => {
+        const data = doc.data();
+        blogs.push(BlogModel.fromFirebase(data));
+      });
+      return blogs;
+    } catch (error) {
+      return new ApiError("Fetching Blog Failed", 400);
+    }
+  }
   async createBlog(
     blogData: BlogPostBody,
     userId: string
