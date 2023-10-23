@@ -149,7 +149,9 @@ const CreateBlogPage = () => {
               <p className="inputErrorMessage mt-1 mb-1">{imageErrorMessage}</p>
             )}
           </div>
-          <button className="outlineButton">Cancel</button>
+          <button className="outlineButton" disabled={isSubmitting}>
+            Cancel
+          </button>
           <button
             className="primaryButton"
             disabled={isSubmitting}

@@ -21,7 +21,7 @@
     @apply bg-blue-500 px-4 py-2 text-white rounded hover:bg-blue-600 cursor-pointer transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed;
 }
 .outlineButton{
-    @apply border border-blue-500 rounded px-4 py-2;
+    @apply border border-blue-500 rounded px-4 py-2 disabled:border-gray-400 disabled:text-gray-500 disabled:cursor-not-allowed;
 }
 .inputErrorMessage{
     @apply text-xs text-red-500;
