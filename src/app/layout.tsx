@@ -4,6 +4,7 @@ import "../styles/globals.css";
 import StoreProvider from "@/store/store_provider";
 import AuthProvider from "@/views/auth_provider/auth_provider";
 import Header from "@/views/header/header";
+import BlogProvider from "@/views/blog_provider/blog_provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,8 +23,10 @@ export default function RootLayout({
       <body className={inter.className}>
         <StoreProvider>
           <AuthProvider>
-            <Header />
-            {children}
+            <BlogProvider>
+              <Header />
+              {children}
+            </BlogProvider>
           </AuthProvider>
         </StoreProvider>
       </body>
