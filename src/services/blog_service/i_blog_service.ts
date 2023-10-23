@@ -7,5 +7,9 @@ abstract class IBlogService {
     blogData: BlogPostBody,
     token: string
   ): Promise<IBlogModel | Error>;
+  abstract fetchBlogs(
+    limit: number,
+    skip: number
+  ): Promise<IBlogModel[] | Error>;
 }
 export default IBlogService;
