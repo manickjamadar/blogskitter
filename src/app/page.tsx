@@ -9,6 +9,7 @@ export default function HomePage() {
   const dispatch = useAppDispatch();
   const isBlogsFetching = useAppSelector(BlogsSelector.isBlogsFetching);
   const canFetchMoreBlogs = useAppSelector(BlogsSelector.canFetchMoreBlogs);
+  const isFetchedAll = useAppSelector(BlogsSelector.isFetchedAll);
   const handleFetchMoreBlogs = () => {
     dispatch(
       BlogsActions.fetchBlogs({
@@ -34,6 +35,7 @@ export default function HomePage() {
           Load More
         </button>
       )}
+      {isFetchedAll && <p>You have reached the end</p>}
     </main>
   );
 }

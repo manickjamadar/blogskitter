@@ -5,5 +5,6 @@ class BlogsSelector {
     state.blogs.state === "fetching";
   static canFetchMoreBlogs = (state: RootState) =>
     state.blogs.canFetchMore && state.blogs.state === "fetched";
+  static isFetchedAll = (state: RootState) => !state.blogs.canFetchMore;
 }
 export default BlogsSelector;
