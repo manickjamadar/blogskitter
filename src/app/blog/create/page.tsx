@@ -2,10 +2,12 @@
 import AuthError from "@/domain/error/auth_error";
 import BlogFormBodySchema from "@/schemas/blog_form_body_schema";
 import { BlogPostBody } from "@/schemas/blog_post_body_schema";
-import { authService, blogService } from "@/services";
+import { authService, blogService, storageService } from "@/services";
+import validateImage from "@/utils/validateImage";
 import InputField from "@/views/input_field/input_field";
 import ProtectedPage from "@/views/protected_page/protected_page";
 import { useFormik } from "formik";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 interface BlogFormData {
@@ -13,12 +15,30 @@ interface BlogFormData {
   description: string;
 }
 const CreateBlogPage = () => {
+  const [uploadImage, setUploadImage] = useState<File | null>(null);
+  const [imageErrorMessage, setImageErrorMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const initialValues: BlogFormData = {
     title: "",
     description: "",
   };
   const router = useRouter();
+  const handleUploadImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const image = event.target.files && event.target.files[0];
+    const defaultErrorMessage = "Image is required";
+    const imageErrorMessage = image
+      ? validateImage(image)
+      : defaultErrorMessage;
+    if (imageErrorMessage) {
+      setImageErrorMessage(imageErrorMessage);
+      setUploadImage(null);
+      return;
+    }
+    if (image) {
+      setUploadImage(image);
+      setImageErrorMessage("");
+    }
+  };
   const {
     handleSubmit,
     handleChange,
@@ -31,24 +51,35 @@ const CreateBlogPage = () => {
     initialValues: initialValues,
     validationSchema: BlogFormBodySchema,
     onSubmit: async (values, { resetForm, setSubmitting }) => {
+      if (!uploadImage) {
+        setImageErrorMessage("Cover Image is required");
+        return;
+      }
       let error: Error | undefined;
       //get user id token
       const tokenOrError = await authService.getUserToken();
       if (tokenOrError instanceof AuthError) {
         error = tokenOrError;
       } else {
-        const blogData: BlogPostBody = {
-          title: values.title,
-          description: values.description,
-          categories: ["Category 1", "Category 2"],
-          coverImageUrl: "https://image.google.com/image",
-        };
-        const blogOrError = await blogService.createBlog(
-          blogData,
-          tokenOrError
+        const imageUrlOrError = await storageService.getCoverImageUrl(
+          uploadImage
         );
-        if (blogOrError instanceof Error) {
-          error = blogOrError;
+        if (imageUrlOrError instanceof Error) {
+          error = imageUrlOrError;
+        } else {
+          const blogData: BlogPostBody = {
+            title: values.title,
+            description: values.description,
+            categories: ["coding"],
+            coverImageUrl: imageUrlOrError,
+          };
+          const blogOrError = await blogService.createBlog(
+            blogData,
+            tokenOrError
+          );
+          if (blogOrError instanceof Error) {
+            error = blogOrError;
+          }
         }
       }
       if (error) {
@@ -57,6 +88,7 @@ const CreateBlogPage = () => {
       } else {
         resetForm();
         setErrorMessage("");
+        setImageErrorMessage("");
         router.push("/");
       }
     },
@@ -91,6 +123,32 @@ const CreateBlogPage = () => {
             touched={touched.description}
             label="Description"
           />
+          <div>
+            {uploadImage && (
+              <Image
+                src={URL.createObjectURL(uploadImage)}
+                width={100}
+                height={100}
+                alt="Cover Image"
+              />
+            )}
+            {uploadImage && (
+              <p className="text-green-500">{uploadImage.name}</p>
+            )}
+            <label htmlFor="coverImage" className="primaryButton">
+              Add Cover Image
+            </label>
+            <input
+              type="file"
+              id="coverImage"
+              className="hidden"
+              accept="image/*"
+              onChange={handleUploadImage}
+            />
+            {imageErrorMessage && (
+              <p className="inputErrorMessage mt-1 mb-1">{imageErrorMessage}</p>
+            )}
+          </div>
           <button className="outlineButton">Cancel</button>
           <button
             className="primaryButton"
