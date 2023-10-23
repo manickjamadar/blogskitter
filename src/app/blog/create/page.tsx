@@ -4,6 +4,7 @@ import BlogFormBodySchema from "@/schemas/blog_form_body_schema";
 import { BlogPostBody } from "@/schemas/blog_post_body_schema";
 import { authService, blogService, storageService } from "@/services";
 import validateImage from "@/utils/validateImage";
+import ImageUploadField from "@/views/image_upload_field/image_upload_field";
 import InputField from "@/views/input_field/input_field";
 import ProtectedPage from "@/views/protected_page/protected_page";
 import { useFormik } from "formik";
@@ -95,9 +96,14 @@ const CreateBlogPage = () => {
   });
   return (
     <ProtectedPage>
-      <div>
-        <h2>Create Blog Post</h2>
-        <form onSubmit={handleSubmit}>
+      <div className="w-10/12 max-w-lg mx-auto mt-5 rounded p-5">
+        <h2 className="text-2xl sm:text-3xl font-bold text-gray-600 text-center mb-2">
+          Create Blog
+        </h2>
+        <p className="text-sm sm:text-base text-center text-gray-500 mb-6">
+          The world is waiting for something new today
+        </p>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           {errorMessage && (
             <p className="bg-red-400 text-white rounded text-sm px-4 py-2">
               {errorMessage}
@@ -123,42 +129,28 @@ const CreateBlogPage = () => {
             touched={touched.description}
             label="Description"
           />
-          <div>
-            {uploadImage && (
-              <Image
-                src={URL.createObjectURL(uploadImage)}
-                width={100}
-                height={100}
-                alt="Cover Image"
-              />
-            )}
-            {uploadImage && (
-              <p className="text-green-500">{uploadImage.name}</p>
-            )}
-            <label htmlFor="coverImage" className="primaryButton">
-              Add Cover Image
-            </label>
-            <input
-              type="file"
-              id="coverImage"
-              className="hidden"
-              accept="image/*"
-              onChange={handleUploadImage}
-            />
-            {imageErrorMessage && (
-              <p className="inputErrorMessage mt-1 mb-1">{imageErrorMessage}</p>
-            )}
+          <ImageUploadField
+            id="coverImage"
+            image={uploadImage}
+            onChange={handleUploadImage}
+            errorMessage={imageErrorMessage}
+          />
+          <div className="flex gap-4">
+            <button
+              className="outlineButton flex-1"
+              disabled={isSubmitting}
+              onClick={() => router.back()}
+            >
+              Cancel
+            </button>
+            <button
+              className="primaryButton flex-1"
+              disabled={isSubmitting}
+              type="submit"
+            >
+              Save
+            </button>
           </div>
-          <button className="outlineButton" disabled={isSubmitting}>
-            Cancel
-          </button>
-          <button
-            className="primaryButton"
-            disabled={isSubmitting}
-            type="submit"
-          >
-            Save
-          </button>
         </form>
       </div>
     </ProtectedPage>
