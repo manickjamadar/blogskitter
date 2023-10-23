@@ -10,6 +10,10 @@ export default function HomePage() {
   const isBlogsFetching = useAppSelector(BlogsSelector.isBlogsFetching);
   const canFetchMoreBlogs = useAppSelector(BlogsSelector.canFetchMoreBlogs);
   const isFetchedAll = useAppSelector(BlogsSelector.isFetchedAll);
+  const isFetchingFailed = useAppSelector(BlogsSelector.isFetchingFailed);
+  const fetchingErrorMessage = useAppSelector(
+    BlogsSelector.fetchingErrorMessage
+  );
   const handleFetchMoreBlogs = () => {
     dispatch(
       BlogsActions.fetchBlogs({
@@ -20,6 +24,15 @@ export default function HomePage() {
     );
   };
   const blogs = useAppSelector((state) => state.blogs.values);
+  if (isFetchingFailed) {
+    return (
+      <p className="px-4 py-2 rounded border border-red-500 bg-red-50 text-red-400 text-center max-w-sm mx-auto mt-10">
+        {fetchingErrorMessage
+          ? fetchingErrorMessage
+          : "Something went wrong, try again"}
+      </p>
+    );
+  }
   return (
     <main>
       {blogs.length > 0 &&
