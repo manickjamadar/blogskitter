@@ -57,6 +57,17 @@ class BlogModel implements IBlogModel {
       createdDate: Timestamp.fromDate(new Date(this.createdDate)),
     };
   }
+  static fromFirebase(data: FirebaseFirestore.DocumentData): IBlogModel {
+    return {
+      id: data["id"],
+      title: data["title"],
+      categories: [...data["categories"]],
+      coverImageUrl: data["coverImageUrl"],
+      uid: data["uid"],
+      description: data["description"],
+      createdDate: (data["createdDate"] as Timestamp).toDate().toISOString(),
+    };
+  }
 }
 
 export default BlogModel;
