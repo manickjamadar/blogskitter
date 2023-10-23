@@ -24,7 +24,7 @@ const Header = () => {
   };
   return (
     <>
-      <header className="flex justify-between p-4 border-b-2 items-center">
+      <header className="flex justify-between p-4 border items-center">
         <h1 className="text-xl">
           <Link href="/">Blogskitter</Link>
         </h1>
