@@ -40,6 +40,7 @@ const blogsSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchBlogs.pending, (state, action) => {
       state.state = "fetching";
+      state.canFetchMore = false;
     });
     builder.addCase(fetchBlogs.rejected, (state, action) => {
       state.errorMessage = "Blogs fetching failed";
