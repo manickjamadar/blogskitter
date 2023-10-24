@@ -1,5 +1,4 @@
-import { auth } from "@/config/firebase";
-import AuthError, { AuthErrorCode } from "@/domain/error/auth_error";
+import AuthError from "@/domain/error/auth_error";
 import UserModel from "@/domain/models/user";
 import SigninSchema from "@/schemas/signin_schema";
 import SignupSchema from "@/schemas/signup_schema";
@@ -8,6 +7,8 @@ import React, { useState } from "react";
 import GoogleAuthButton from "../google_auth_button/google_auth_button";
 import { authService } from "@/services";
 import InputField from "../input_field/input_field";
+import { useAppDispatch } from "@/store/store";
+import { AuthActions } from "@/store/slices/auth_slice";
 export interface AuthFormData {
   name?: string;
   email: string;
@@ -27,7 +28,9 @@ const AuthForm: React.FC<Props> = ({
   onSubmit,
 }) => {
   const [errorMessage, setErrorMessage] = useState("");
+  const dispatch = useAppDispatch();
   const handleGoogleLogin = async () => {
+    dispatch(AuthActions.startAuthenticating());
     const error = await authService.loginWithGoogle();
     if (error) {
       setErrorMessage(error.message);
@@ -53,6 +56,7 @@ const AuthForm: React.FC<Props> = ({
     onSubmit: async (values, { resetForm, setSubmitting }) => {
       let userOrError: UserModel | AuthError;
       setErrorMessage("");
+      dispatch(AuthActions.startAuthenticating());
       if (isSigningup) {
         userOrError = await authService.signup({
           ...values,
