@@ -17,7 +17,7 @@ const BlogCard: React.FC<Props> = ({ blog }) => {
 
   return (
     <div className="flex flex-col rounded-lg overflow-hidden w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(33%-1.5rem)] max-w-xs shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px]">
-      <div className="bg-blue-100 aspect-video w-full relative">
+      <div className="bg-gray-100 aspect-video w-full relative">
         <Image
           src={coverImageUrl}
           alt="blog cover placeholder image"
