@@ -4,6 +4,8 @@ import BlogsSelector from "@/store/selectors/blogs_selector";
 import { BlogsActions } from "@/store/slices/blogs_slice";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import BlogCardList from "@/views/blog_card_list/blog_card_list";
+import BlogCardSkeleton from "@/views/blog_card_skeleton/blog_card_skeleton";
+import BlogCardSkeletonList from "@/views/blog_card_skeleton_list/blog_card_skeleton_list";
 
 export default function HomePage() {
   const dispatch = useAppDispatch();
@@ -36,7 +38,9 @@ export default function HomePage() {
   return (
     <main>
       {blogs.length > 0 && <BlogCardList blogs={blogs} />}
-      {isBlogsFetching && <p className="text-2xl">Loading...</p>}
+      {isBlogsFetching && (
+        <BlogCardSkeletonList length={config.blog.fetchingLimit} />
+      )}
       {canFetchMoreBlogs && (
         <button className="primaryButton" onClick={handleFetchMoreBlogs}>
           Load More
