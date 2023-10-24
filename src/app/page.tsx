@@ -4,7 +4,6 @@ import BlogsSelector from "@/store/selectors/blogs_selector";
 import { BlogsActions } from "@/store/slices/blogs_slice";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import BlogCardList from "@/views/blog_card_list/blog_card_list";
-import BlogCardSkeleton from "@/views/blog_card_skeleton/blog_card_skeleton";
 import BlogCardSkeletonList from "@/views/blog_card_skeleton_list/blog_card_skeleton_list";
 
 export default function HomePage() {
