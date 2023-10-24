@@ -13,7 +13,8 @@ const BlogCard: React.FC<Props> = ({ blog }) => {
   const [coverImageUrl, setCoverImageUrl] = useState(
     blog.coverImageUrl ? blog.coverImageUrl : errorImageUrl
   );
-
+  const placeholderDataUrl =
+    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/OXbHwAJmgPbgNt2+QAAAABJRU5ErkJggg==";
   return (
     <div className="flex flex-col rounded-lg overflow-hidden w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(33%-1.5rem)] max-w-xs shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px]">
       <div className="bg-gray-100 aspect-video w-full relative">
@@ -22,6 +23,7 @@ const BlogCard: React.FC<Props> = ({ blog }) => {
           alt="blog cover placeholder image"
           fill
           className="object-cover"
+          placeholder={placeholderDataUrl}
           onError={() => setCoverImageUrl(errorImageUrl)}
         />
       </div>
