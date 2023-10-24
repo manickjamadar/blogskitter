@@ -42,11 +42,20 @@ export default function HomePage() {
         <BlogCardSkeletonList length={config.blog.fetchingLimit} />
       )}
       {canFetchMoreBlogs && (
-        <button className="primaryButton" onClick={handleFetchMoreBlogs}>
-          Load More
-        </button>
+        <div className="flex justify-center mb-8">
+          <button
+            className="roundedOutlineButton"
+            onClick={handleFetchMoreBlogs}
+          >
+            Load More
+          </button>
+        </div>
       )}
-      {isFetchedAll && <p>You have reached the end</p>}
+      {isFetchedAll && (
+        <p className="text-center p-6 text-2xl font-medium text-gray-200 animate-pulse">
+          You have reached the end
+        </p>
+      )}
     </main>
   );
 }
