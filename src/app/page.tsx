@@ -5,9 +5,11 @@ import { BlogsActions } from "@/store/slices/blogs_slice";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import BlogCardList from "@/views/blog_card_list/blog_card_list";
 import BlogCardSkeletonList from "@/views/blog_card_skeleton_list/blog_card_skeleton_list";
+import { useRouter } from "next/navigation";
 
 export default function HomePage() {
   const dispatch = useAppDispatch();
+  const router = useRouter();
   const isBlogsFetching = useAppSelector(BlogsSelector.isBlogsFetching);
   const canFetchMoreBlogs = useAppSelector(BlogsSelector.canFetchMoreBlogs);
   const isFetchedAll = useAppSelector(BlogsSelector.isFetchedAll);
@@ -36,7 +38,12 @@ export default function HomePage() {
   }
   return (
     <main>
-      {blogs.length > 0 && <BlogCardList blogs={blogs} />}
+      {blogs.length > 0 && (
+        <BlogCardList
+          blogs={blogs}
+          onClick={(blog) => router.push("/blog/" + blog.id)}
+        />
+      )}
       {isBlogsFetching && (
         <BlogCardSkeletonList length={config.blog.fetchingLimit} />
       )}
