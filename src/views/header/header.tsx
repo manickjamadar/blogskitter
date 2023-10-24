@@ -6,12 +6,16 @@ import useAuth from "@/hooks/use_auth";
 import useAuthModal from "@/hooks/use_auth_modal";
 import { authService } from "@/services";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/store/store";
+import { AuthActions } from "@/store/slices/auth_slice";
+import HeaderProfile from "./header_profile";
+import HeaderProfileSkeleton from "./header_profile_skeleton";
 
 const Header = () => {
-  const pathname = usePathname();
-  const isCreateBlogPath = pathname === "/blog/create";
-  const { isLoggedIn, isLoggedOut, user } = useAuth();
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const { isLoggedIn, isLoggedOut, user, isAuthenticating } = useAuth();
   const {
     isSigningup,
     closeModal,
@@ -20,6 +24,7 @@ const Header = () => {
     isModalOpen,
   } = useAuthModal();
   const handleLogOut = () => {
+    dispatch(AuthActions.startAuthenticating());
     authService.signout();
   };
   return (
@@ -28,8 +33,9 @@ const Header = () => {
         <h1 className="text-xl">
           <Link href="/">Blogskitter</Link>
         </h1>
-        <div className="flex gap-6 items-center">
-          {isLoggedOut && (
+        <div className="flex gap-4 items-center">
+          {isAuthenticating && <HeaderProfileSkeleton />}
+          {!isAuthenticating && isLoggedOut && (
             <>
               <button className="outlineButton" onClick={openSigninModal}>
                 Sign In
@@ -39,20 +45,15 @@ const Header = () => {
               </button>
             </>
           )}
-          {isLoggedIn && (
-            <>
-              {user && <p>{user.name}</p>}
-              {!isCreateBlogPath && (
-                <Link href="/blog/create" className="outlineButton">
-                  Create
-                </Link>
-              )}
-              <button className="primaryButton" onClick={handleLogOut}>
-                Log Out
-              </button>
-            </>
-          )}
         </div>
+        {!isAuthenticating && isLoggedIn && user && (
+          <HeaderProfile
+            name={user.name}
+            onProfileClick={() => router.push(`/profile/${user.id}`)}
+            onAddClick={() => router.push("/blog/create")}
+            onLogoutClick={handleLogOut}
+          />
+        )}
       </header>
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <AuthForm
