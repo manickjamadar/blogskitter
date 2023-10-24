@@ -1,8 +1,8 @@
 import { apiBlogService } from "@/api_services";
-import Image from "next/image";
 import ApiError from "@/domain/error/api_error";
 import React from "react";
 import formatDate from "@/utils/format_date";
+import CustomImage from "@/views/custom_image/custom_image";
 const BlogPage = async ({ params }: { params: { id: string } }) => {
   const blogId = params.id;
   const blogOrError = await apiBlogService.getBlogById(blogId);
@@ -12,15 +12,14 @@ const BlogPage = async ({ params }: { params: { id: string } }) => {
   const { coverImageUrl, createdDate, description, title } = blogOrError;
   return (
     <div className="p-10 max-w-xl mx-auto">
-      <div className="relative w-full aspect-video rounded-lg overflow-hidden mb-4">
-        <Image
+      <div className="rounded-lg overflow-hidden mb-4">
+        <CustomImage
           src={coverImageUrl}
-          fill
-          alt={`${title} cover image`}
-          className="object-cover"
+          alt="Blog Image"
+          errorSrc="/images/blog-cover-error-placeholder.png"
         />
       </div>
-      <h1 className="text-2xl font-bold mb-2">{title}</h1>
+      <h1 className="text-2xl font-bold mb-2 capitalize">{title}</h1>
       <p className="text-gray-400 italic text-sm mb-4">
         Created at {formatDate(new Date(createdDate))}
       </p>
