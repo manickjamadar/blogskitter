@@ -23,6 +23,9 @@
 .outlineButton{
     @apply border border-blue-500 rounded px-4 py-2 disabled:border-gray-400 disabled:text-gray-500 disabled:cursor-not-allowed;
 }
+.roundedOutlineButton{
+    @apply rounded-full py-1 px-8 border text-sm bg-gray-50 text-gray-600 hover:cursor-pointer hover:border-blue-200 hover:text-blue-600 hover:bg-blue-50 transition-colors;
+}
 .inputErrorMessage{
     @apply text-xs text-red-500;
 }
