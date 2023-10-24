@@ -9,7 +9,6 @@ interface Props {
   blog: IBlogModel;
 }
 const BlogCard: React.FC<Props> = ({ blog }) => {
-  const placeHolderImageUrl = "/images/blog-cover-placeholder.jpg";
   const errorImageUrl = "/images/blog-cover-error-placeholder.png";
   const [coverImageUrl, setCoverImageUrl] = useState(
     blog.coverImageUrl ? blog.coverImageUrl : errorImageUrl
@@ -23,8 +22,6 @@ const BlogCard: React.FC<Props> = ({ blog }) => {
           alt="blog cover placeholder image"
           fill
           className="object-cover"
-          placeholder="blur"
-          blurDataURL={placeHolderImageUrl}
           onError={() => setCoverImageUrl(errorImageUrl)}
         />
       </div>
