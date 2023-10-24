@@ -1,9 +1,9 @@
 "use client";
-
 import config from "@/domain/config";
 import BlogsSelector from "@/store/selectors/blogs_selector";
 import { BlogsActions } from "@/store/slices/blogs_slice";
 import { useAppDispatch, useAppSelector } from "@/store/store";
+import BlogCardList from "@/views/blog_card_list/blog_card_list";
 
 export default function HomePage() {
   const dispatch = useAppDispatch();
@@ -35,13 +35,7 @@ export default function HomePage() {
   }
   return (
     <main>
-      {blogs.length > 0 &&
-        blogs.map((blog) => (
-          <div key={blog.id} className="border rounded p-2">
-            <p className="font-bold">{blog.title}</p>
-            <p>{blog.description}</p>
-          </div>
-        ))}
+      {blogs.length > 0 && <BlogCardList blogs={blogs} />}
       {isBlogsFetching && <p className="text-2xl">Loading...</p>}
       {canFetchMoreBlogs && (
         <button className="primaryButton" onClick={handleFetchMoreBlogs}>
