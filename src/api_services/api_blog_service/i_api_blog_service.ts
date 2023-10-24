@@ -1,5 +1,5 @@
 import ApiError from "@/domain/error/api_error";
-import BlogModel, { IBlogModel } from "@/domain/models/blog";
+import { IBlogModel } from "@/domain/models/blog";
 import { BlogPostBody } from "@/schemas/blog_post_body_schema";
 
 abstract class IApiBlogService {
@@ -11,5 +11,6 @@ abstract class IApiBlogService {
     limit: number,
     skip: number
   ): Promise<IBlogModel[] | ApiError>;
+  abstract getBlogById(id: string): Promise<IBlogModel | ApiError>;
 }
 export default IApiBlogService;
