@@ -2,6 +2,7 @@
 import { IBlogModel } from "@/domain/models/blog";
 import React, { useState } from "react";
 import ProfileBlogCard from "../profile_blog_card/profile_blog_card";
+import { useRouter } from "next/navigation";
 interface Props {
   blogs: IBlogModel[];
 }
@@ -13,6 +14,7 @@ const deleteBlog = (id: string): Promise<string | Error> => {
   });
 };
 const ProfileBlogList: React.FC<Props> = ({ blogs }) => {
+  const router = useRouter();
   const [blogList, setBlogList] = useState(blogs);
   const handleDelete = async (blog: IBlogModel) => {
     let deletableBlogIndex = -1;
@@ -40,6 +42,7 @@ const ProfileBlogList: React.FC<Props> = ({ blogs }) => {
           key={blog.id}
           blog={blog}
           onDeleteClick={() => handleDelete(blog)}
+          onEditClick={() => router.push(`/blog/edit/${blog.id}`)}
         />
       ))}
     </div>
