@@ -14,6 +14,9 @@ const ProtectedPage: React.FC<Props> = ({ children, redirectUrl = "/" }) => {
       router.replace(redirectUrl);
     }
   }, [router, isLoggedOut, redirectUrl]);
+  if (isLoggedOut) {
+    return null;
+  }
   return children;
 };
 
