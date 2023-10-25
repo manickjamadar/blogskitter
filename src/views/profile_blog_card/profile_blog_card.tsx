@@ -5,8 +5,14 @@ import RawImage from "../raw_image/raw_image";
 import { MdEdit, MdDelete } from "react-icons/md";
 interface Props {
   blog: IBlogModel;
+  onDeleteClick?: () => void;
+  onEditClick?: () => void;
 }
-const ProfileBlogCard: React.FC<Props> = ({ blog }) => {
+const ProfileBlogCard: React.FC<Props> = ({
+  blog,
+  onDeleteClick,
+  onEditClick,
+}) => {
   return (
     <div className="border-b rounded p-4 flex gap-4 overflow-hidden text-ellipsis items-center">
       <div className="w-20 min-w-[5rem] self-stretch bg-gray-100 rounded overflow-hidden relative">
@@ -27,10 +33,16 @@ const ProfileBlogCard: React.FC<Props> = ({ blog }) => {
           {blog.description}
         </p>
       </div>
-      <button className="text-lg text-blue-500 hover:text-blue-800 hover:transition-colors">
+      <button
+        className="text-lg text-blue-500 hover:text-blue-800 hover:transition-colors"
+        onClick={onEditClick}
+      >
         <MdEdit />
       </button>
-      <button className="text-lg text-red-500 hover:text-red-800 hover:transition-colors">
+      <button
+        className="text-lg text-red-500 hover:text-red-800 hover:transition-colors"
+        onClick={onDeleteClick}
+      >
         <MdDelete />
       </button>
     </div>
