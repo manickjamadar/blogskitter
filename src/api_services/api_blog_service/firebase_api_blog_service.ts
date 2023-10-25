@@ -5,6 +5,21 @@ import { adminFirestore } from "@/config/firebase_admin";
 import { BlogPostBody } from "@/schemas/blog_post_body_schema";
 
 class FirebaseApiBlogService implements IApiBlogService {
+  async getBlogsByUserId(userId: string): Promise<ApiError | IBlogModel[]> {
+    try {
+      const blogsRef = FirebaseApiBlogService.getCollection();
+      const query = blogsRef.where("uid", "==", userId);
+      const snapshot = await query.get();
+      const blogs: IBlogModel[] = [];
+      snapshot.docs.forEach((doc) => {
+        const data = doc.data();
+        blogs.push(BlogModel.fromFirebase(data));
+      });
+      return blogs;
+    } catch (error) {
+      return new ApiError("Fetching Blog Failed", 400);
+    }
+  }
   async getBlogById(id: string): Promise<IBlogModel | ApiError> {
     try {
       const docRef = FirebaseApiBlogService.getCollection().doc(id);
