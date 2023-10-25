@@ -15,9 +15,6 @@ const AuthorizedPage: React.FC<Props> = ({ userId, children }) => {
       router.replace("/");
     }
   }, [isUserAuthorized, router]);
-  if (!isUserAuthorized) {
-    return null;
-  }
   return children;
 };
 
