@@ -1,6 +1,6 @@
 "use client";
 import formatFullName from "@/utils/format_full_name";
-import profilePic from "./profile-pic.png";
+import profilePic from "../../assets/images/profile-pic.png";
 import { AiOutlinePoweroff, AiOutlinePlus } from "react-icons/ai";
 import React from "react";
 import Image from "next/image";
