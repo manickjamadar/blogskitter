@@ -1,11 +1,38 @@
+import { getDemoBlogData } from "@/domain/data/demo_blog_data";
+import { IBlogModel } from "@/domain/models/blog";
+import UserModel from "@/domain/models/user";
 import AuthorizedPage from "@/views/authorized_page/authorized_page";
-import React, { useEffect } from "react";
-
-const ProfilePage = ({ params }: { params: { id: string } }) => {
+import Profile from "@/views/profile/profile";
+import ProfileBlogList from "@/views/profile_blog_list/profile_blog_list";
+import React from "react";
+const getProfile = (userId: string): Promise<UserModel> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        email: "manickware@gmail.com",
+        id: userId,
+        name: "Manick Lal Jamadar",
+      });
+    }, 3000);
+  });
+};
+const getBlogsByUserId = (userId: string): Promise<IBlogModel[]> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(getDemoBlogData(10, 0));
+    }, 3000);
+  });
+};
+const ProfilePage = async ({ params }: { params: { id: string } }) => {
   const profileId = params.id;
+  const { email, name } = await getProfile(profileId);
+  const blogs = await getBlogsByUserId(profileId);
   return (
     <AuthorizedPage userId={profileId}>
-      <div>ProfilePage id: {profileId}</div>
+      <div className="py-4">
+        <Profile email={email} name={name} />
+        <ProfileBlogList blogs={blogs} />
+      </div>
     </AuthorizedPage>
   );
 };
