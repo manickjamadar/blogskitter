@@ -4,11 +4,38 @@ import { BlogPostBody } from "@/schemas/blog_post_body_schema";
 import { IBlogModel } from "@/domain/models/blog";
 import GetBlogsResponseBody from "@/domain/response_bodies/blog/get_blogs_response_body";
 import IAuthService from "../auth_service/i_auth_service";
+import DeleteBlogResponseBody from "@/domain/response_bodies/delete_blog_response_body";
 
 class FetchBlogService implements IBlogService {
   public authService: IAuthService;
   constructor({ authService }: { authService: IAuthService }) {
     this.authService = authService;
+  }
+  async deleteBlog(id: string): Promise<IBlogModel | Error> {
+    const defaultErrorMessage = "Blog deletion failed";
+    const blogDeleteUrl = "/api/blog/" + id;
+    try {
+      const tokenOrError = await this.authService.getUserToken();
+      if (tokenOrError instanceof Error) {
+        throw tokenOrError;
+      }
+      const res = await fetch(blogDeleteUrl, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${tokenOrError}`,
+        },
+      });
+      if (!res.ok) {
+        throw new Error(defaultErrorMessage);
+      }
+      const data = (await res.json()) as DeleteBlogResponseBody;
+      return data.blog;
+    } catch (error) {
+      if (error instanceof Error) {
+        return error;
+      }
+      return new Error(defaultErrorMessage);
+    }
   }
   async fetchBlogs(limit: number, skip: number): Promise<IBlogModel[] | Error> {
     const defaultErrorMessage = "Fetching blogs failed";

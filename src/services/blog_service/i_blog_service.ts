@@ -7,5 +7,6 @@ abstract class IBlogService {
     limit: number,
     skip: number
   ): Promise<IBlogModel[] | Error>;
+  abstract deleteBlog(id: string): Promise<IBlogModel | Error>;
 }
 export default IBlogService;
