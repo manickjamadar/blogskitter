@@ -1,5 +1,6 @@
 import { apiBlogService } from "@/api_services";
 import ApiError from "@/domain/error/api_error";
+import BlogForm from "@/views/blog_form/blog_form";
 import ProtectedPage from "@/views/protected_page/protected_page";
 import React from "react";
 
@@ -11,7 +12,7 @@ const BlogEditPage = async ({ params }: { params: { id: string } }) => {
   }
   return (
     <ProtectedPage>
-      <div>Blog title: {blogOrError.title}</div>
+      <BlogForm editableBlog={blogOrError} />
     </ProtectedPage>
   );
 };
