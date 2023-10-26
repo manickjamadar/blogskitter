@@ -10,7 +10,7 @@ const BlogCardList: React.FC<Props> = ({ blogs, onClick }) => {
     return null;
   }
   return (
-    <div className="flex p-10 gap-6 flex-wrap box-border justify-center">
+    <div className="flex gap-6 flex-wrap box-border justify-center">
       {blogs.map((blog) => (
         <BlogCard
           key={blog.id}
