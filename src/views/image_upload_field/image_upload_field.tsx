@@ -1,13 +1,13 @@
 import React from "react";
 import Image from "next/image";
 interface Props {
-  image: File | null | undefined;
+  imageUrl?: string;
   id: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   errorMessage?: string;
 }
 const ImageUploadField: React.FC<Props> = ({
-  image,
+  imageUrl,
   id,
   onChange,
   errorMessage,
@@ -17,12 +17,12 @@ const ImageUploadField: React.FC<Props> = ({
       <p className="mb-2">Cover Image</p>
       <label htmlFor="coverImage" className="cursor-pointer">
         <div className="w-full aspect-video rounded bg-blue-50 p-4 relative">
-          {image ? (
+          {imageUrl ? (
             <Image
-              src={URL.createObjectURL(image)}
+              src={imageUrl}
+              alt="cover preview image"
               fill
-              className="object-cover rounded"
-              alt="Cover Image"
+              className="object-cover"
             />
           ) : (
             <div className="w-full aspect-video border-2 border-slate-200 border-dashed flex flex-col justify-center items-center rounded gap-2">
@@ -32,7 +32,7 @@ const ImageUploadField: React.FC<Props> = ({
               <p className="text-xs text-gray-400">Supports JPG,PNG, Max 1MB</p>
             </div>
           )}
-          {image && (
+          {imageUrl && (
             <div className="text-xs font-medium absolute top-0 right-0 text-gray-500 bg-white bg-opacity-80 px-6 py-1 rounded-bl-xl">
               Change Cover
             </div>
