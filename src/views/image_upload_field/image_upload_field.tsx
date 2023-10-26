@@ -16,7 +16,7 @@ const ImageUploadField: React.FC<Props> = ({
     <div>
       <p className="mb-2">Cover Image</p>
       <label htmlFor="coverImage" className="cursor-pointer">
-        <div className="w-full aspect-video rounded bg-blue-50 p-4 relative">
+        <div className="w-full aspect-video rounded bg-blue-50 p-4 relative overflow-hidden">
           {imageUrl ? (
             <Image
               src={imageUrl}
