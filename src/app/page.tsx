@@ -5,6 +5,7 @@ import { BlogsActions } from "@/store/slices/blogs_slice";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import BlogCardList from "@/views/blog_card_list/blog_card_list";
 import BlogCardSkeletonList from "@/views/blog_card_skeleton_list/blog_card_skeleton_list";
+import Container from "@/views/container/container";
 import { useRouter } from "next/navigation";
 
 export default function HomePage() {
@@ -38,30 +39,32 @@ export default function HomePage() {
   }
   return (
     <main>
-      {blogs.length > 0 && (
-        <BlogCardList
-          blogs={blogs}
-          onClick={(blog) => router.push("/blog/" + blog.id)}
-        />
-      )}
-      {isBlogsFetching && (
-        <BlogCardSkeletonList length={config.blog.fetchingLimit} />
-      )}
-      {canFetchMoreBlogs && (
-        <div className="flex justify-center mb-8">
-          <button
-            className="roundedOutlineButton"
-            onClick={handleFetchMoreBlogs}
-          >
-            Load More
-          </button>
-        </div>
-      )}
-      {isFetchedAll && (
-        <p className="text-center p-6 text-2xl font-medium text-gray-200 animate-pulse">
-          You have reached the end
-        </p>
-      )}
+      <Container>
+        {blogs.length > 0 && (
+          <BlogCardList
+            blogs={blogs}
+            onClick={(blog) => router.push("/blog/" + blog.id)}
+          />
+        )}
+        {isBlogsFetching && (
+          <BlogCardSkeletonList length={config.blog.fetchingLimit} />
+        )}
+        {canFetchMoreBlogs && (
+          <div className="flex justify-center mb-8">
+            <button
+              className="roundedOutlineButton"
+              onClick={handleFetchMoreBlogs}
+            >
+              Load More
+            </button>
+          </div>
+        )}
+        {isFetchedAll && (
+          <p className="text-center p-6 text-2xl font-medium text-gray-200 animate-pulse">
+            You have reached the end
+          </p>
+        )}
+      </Container>
     </main>
   );
 }
