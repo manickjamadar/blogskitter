@@ -4,16 +4,10 @@ import React, { useState } from "react";
 import ProfileBlogCard from "../profile_blog_card/profile_blog_card";
 import { useRouter } from "next/navigation";
 import Modal from "../modal/modal";
+import { blogService } from "@/services";
 interface Props {
   blogs: IBlogModel[];
 }
-const deleteBlog = (id: string): Promise<string | Error> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(new Error("asd"));
-    }, 3000);
-  });
-};
 const ProfileBlogList: React.FC<Props> = ({ blogs }) => {
   const [deletableBlog, setDeletableBlog] = useState<IBlogModel | undefined>(
     undefined
@@ -34,7 +28,7 @@ const ProfileBlogList: React.FC<Props> = ({ blogs }) => {
       deletableBlog = oldBlogList.find((b) => b.id === blog.id);
       return oldBlogList.filter((b) => b.id !== blog.id);
     });
-    const result = await deleteBlog(blog.id);
+    const result = await blogService.deleteBlog(blog.id);
     if (result instanceof Error) {
       setBlogList((oldBlogList) => {
         const newBlogList = [...oldBlogList];
