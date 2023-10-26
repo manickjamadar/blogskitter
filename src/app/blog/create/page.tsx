@@ -1,5 +1,6 @@
 "use client";
 import AuthError from "@/domain/error/auth_error";
+import useAuth from "@/hooks/use_auth";
 import BlogFormBodySchema from "@/schemas/blog_form_body_schema";
 import { BlogPostBody } from "@/schemas/blog_post_body_schema";
 import { authService, blogService, storageService } from "@/services";
@@ -8,7 +9,6 @@ import ImageUploadField from "@/views/image_upload_field/image_upload_field";
 import InputField from "@/views/input_field/input_field";
 import ProtectedPage from "@/views/protected_page/protected_page";
 import { useFormik } from "formik";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 interface BlogFormData {
@@ -24,6 +24,7 @@ const CreateBlogPage = () => {
     description: "",
   };
   const router = useRouter();
+  const { user } = useAuth();
   const handleUploadImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     const image = event.target.files && event.target.files[0];
     const defaultErrorMessage = "Image is required";
@@ -90,7 +91,10 @@ const CreateBlogPage = () => {
         resetForm();
         setErrorMessage("");
         setImageErrorMessage("");
-        router.push("/");
+        // router.push("/");
+        if (user) {
+          router.push(`/profile/${user.id}`);
+        }
       }
     },
   });

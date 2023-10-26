@@ -8,7 +8,9 @@ class FirebaseApiBlogService implements IApiBlogService {
   async getBlogsByUserId(userId: string): Promise<ApiError | IBlogModel[]> {
     try {
       const blogsRef = FirebaseApiBlogService.getCollection();
-      const query = blogsRef.where("uid", "==", userId);
+      const query = blogsRef
+        .orderBy("createdDate", "desc")
+        .where("uid", "==", userId);
       const snapshot = await query.get();
       const blogs: IBlogModel[] = [];
       snapshot.docs.forEach((doc) => {
