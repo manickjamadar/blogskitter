@@ -82,9 +82,8 @@ const CreateBlogPage = () => {
         resetForm();
         setErrorMessage("");
         setImageErrorMessage("");
-        // router.push("/");
         if (user) {
-          router.push(`/profile/${user.id}`);
+          router.replace(`/profile/${user.id}`);
         }
       }
     },
