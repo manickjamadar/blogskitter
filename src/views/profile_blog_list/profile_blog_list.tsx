@@ -35,6 +35,13 @@ const ProfileBlogList: React.FC<Props> = ({ blogs }) => {
       });
     }
   };
+  if (blogList.length === 0) {
+    return (
+      <p className="text-2xl text-gray-300 p-10 text-center">
+        No Blogs Available
+      </p>
+    );
+  }
   return (
     <div className="max-w-2xl p-5 mx-auto">
       {blogList.map((blog) => (
