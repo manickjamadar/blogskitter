@@ -112,6 +112,7 @@ const BlogForm: React.FC<Props> = ({ editableBlog }) => {
         setImageErrorMessage("");
         if (user) {
           router.replace(`/profile/${user.id}`);
+          router.refresh();
         }
       } catch (error) {
         const errorMessage =
