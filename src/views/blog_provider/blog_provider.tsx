@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "@/store/store";
 import fromFirebaseToBlogModel from "@/utils/fromFirebaseToBlogModel";
 import {
   Timestamp,
+  Unsubscribe,
   collection,
   onSnapshot,
   query,
@@ -15,6 +16,7 @@ import React, { useEffect } from "react";
 
 const BlogProvider = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useAppDispatch();
+  const blogs = useAppSelector((state) => state.blogs.values);
   const shouldFetchBlogsInitially = useAppSelector(
     (state) => state.blogs.state === "idle"
   );
@@ -47,7 +49,23 @@ const BlogProvider = ({ children }: { children: React.ReactNode }) => {
       unsubscribe();
     };
   }, [dispatch]);
-
+  useEffect(() => {
+    const unsubscriberList: Unsubscribe[] = [];
+    blogs.forEach((blog) => {
+      const q = query(collection(db, "blog"), where("id", "==", blog.id));
+      const unsub = onSnapshot(q, (snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+          if (change.type === "removed") {
+            dispatch(BlogsActions.remove({ blogId: change.doc.id }));
+          }
+        });
+      });
+      unsubscriberList.push(unsub);
+    });
+    return () => {
+      unsubscriberList.forEach((unsub) => unsub());
+    };
+  }, [blogs, dispatch]);
   return children;
 };
 

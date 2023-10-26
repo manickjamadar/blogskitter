@@ -42,6 +42,9 @@ const blogsSlice = createSlice({
       const newBlogs = state.values.filter((b) => b.id !== mergableBlog.id);
       state.values = [{ ...mergableBlog }, ...newBlogs];
     },
+    remove: (state, action: PayloadAction<{ blogId: string }>) => {
+      state.values = state.values.filter((b) => b.id !== action.payload.blogId);
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchBlogs.pending, (state, action) => {
