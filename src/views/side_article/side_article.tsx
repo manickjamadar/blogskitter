@@ -9,7 +9,7 @@ const SideArticles = () => {
   const blogs = useAppSelector((state) => state.blogs.values).slice(0, 15);
   return (
     <div className="">
-      <h3 className="text-xl text-center text-gray-700 font-medium mb-6">
+      <h3 className="text-xl text-center text-gray-700 font-medium mb-4">
         Related Articles
       </h3>
       <div className="flex flex-col gap-4">

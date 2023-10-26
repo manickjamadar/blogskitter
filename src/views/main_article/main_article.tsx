@@ -27,7 +27,7 @@ const MainArticle: React.FC<Props> = ({ blog }) => {
         <p className="text-gray-600">{description}</p>
         <DemoBlogContent />
       </div>
-      <div className="hidden lg:block flex-1">
+      <div className="hidden lg:block flex-1 pt-7">
         <SideArticles />
       </div>
     </div>
