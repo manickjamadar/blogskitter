@@ -7,17 +7,25 @@ interface Props {
   errorSrc: string;
 }
 const RawImage: React.FC<Props> = ({ alt, src, errorSrc }) => {
-  const [actualSrc, setActualSrc] = useState(src ? src : errorSrc);
+  const [hasError, setHasError] = useState(src ? false : true);
   const placeholderDataUrl =
     "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/OXbHwAJmgPbgNt2+QAAAABJRU5ErkJggg==";
-  return (
+  return hasError ? (
     <Image
-      src={actualSrc}
+      src={errorSrc}
       alt={alt}
       fill
       className="object-cover"
       placeholder={placeholderDataUrl}
-      onError={() => setActualSrc(errorSrc)}
+    />
+  ) : (
+    <Image
+      src={src}
+      alt={alt}
+      fill
+      className="object-cover"
+      placeholder={placeholderDataUrl}
+      onError={(e) => setHasError(true)}
     />
   );
 };
