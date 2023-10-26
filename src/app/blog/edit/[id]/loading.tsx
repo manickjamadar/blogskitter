@@ -1,11 +1,8 @@
+import BlogFormSkeleton from "@/views/blog_form_skeleton/blog_form_skeleton";
 import React from "react";
 
 const BlogEditPageLoading = () => {
-  return (
-    <div className="text-xl text-center p-4 font-medium">
-      Blog Edit Page Loading
-    </div>
-  );
+  return <BlogFormSkeleton />;
 };
 
 export default BlogEditPageLoading;
