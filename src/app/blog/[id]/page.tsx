@@ -3,11 +3,23 @@ import ApiError from "@/domain/error/api_error";
 import React from "react";
 import formatDate from "@/utils/format_date";
 import CustomImage from "@/views/custom_image/custom_image";
+import Link from "next/link";
 const BlogPage = async ({ params }: { params: { id: string } }) => {
   const blogId = params.id;
   const blogOrError = await apiBlogService.getBlogById(blogId);
   if (blogOrError instanceof ApiError) {
-    return <p>{blogOrError.message}</p>;
+    return (
+      <div>
+        <p className="text-xl text-center p-10 text-gray-600">
+          {blogOrError.message}
+        </p>
+        <div className="flex justify-center items-center">
+          <Link href="/" className="mx-auto primaryButton">
+            Go to Home
+          </Link>
+        </div>
+      </div>
+    );
   }
   const { coverImageUrl, createdDate, description, title } = blogOrError;
   return (
