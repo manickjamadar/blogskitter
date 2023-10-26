@@ -1,6 +1,6 @@
 import { IBlogModel } from "@/domain/models/blog";
 import { blogService } from "@/services";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 const sliceName = "blogs";
 const fetchBlogs = createAsyncThunk<
   { blogs: IBlogModel[]; canFetchMore: boolean; isInitialFetching: boolean },
@@ -36,7 +36,13 @@ const initialState: BlogsState = {
 const blogsSlice = createSlice({
   name: sliceName,
   initialState,
-  reducers: {},
+  reducers: {
+    merge: (state, action: PayloadAction<IBlogModel>) => {
+      const mergableBlog = action.payload;
+      const newBlogs = state.values.filter((b) => b.id !== mergableBlog.id);
+      state.values = [{ ...mergableBlog }, ...newBlogs];
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchBlogs.pending, (state, action) => {
       state.state = "fetching";
