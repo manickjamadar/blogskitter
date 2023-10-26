@@ -5,6 +5,14 @@ import { adminFirestore } from "@/config/firebase_admin";
 import { BlogPostBody } from "@/schemas/blog_post_body_schema";
 
 class FirebaseApiBlogService implements IApiBlogService {
+  async deleteBlog(id: string): Promise<void | ApiError> {
+    try {
+      const blogDocRef = FirebaseApiBlogService.getCollection().doc(id);
+      await blogDocRef.delete();
+    } catch (error) {
+      return new ApiError("Blog deletion failed", 400);
+    }
+  }
   async getBlogsByUserId(userId: string): Promise<ApiError | IBlogModel[]> {
     try {
       const blogsRef = FirebaseApiBlogService.getCollection();

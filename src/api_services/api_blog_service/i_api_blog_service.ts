@@ -13,5 +13,6 @@ abstract class IApiBlogService {
   ): Promise<IBlogModel[] | ApiError>;
   abstract getBlogById(id: string): Promise<IBlogModel | ApiError>;
   abstract getBlogsByUserId(userId: string): Promise<IBlogModel[] | ApiError>;
+  abstract deleteBlog(id: string): Promise<void | ApiError>;
 }
 export default IApiBlogService;
