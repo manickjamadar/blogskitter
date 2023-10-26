@@ -58,30 +58,21 @@ const CreateBlogPage = () => {
         return;
       }
       let error: Error | undefined;
-      //get user id token
-      const tokenOrError = await authService.getUserToken();
-      if (tokenOrError instanceof AuthError) {
-        error = tokenOrError;
+      const imageUrlOrError = await storageService.getCoverImageUrl(
+        uploadImage
+      );
+      if (imageUrlOrError instanceof Error) {
+        error = imageUrlOrError;
       } else {
-        const imageUrlOrError = await storageService.getCoverImageUrl(
-          uploadImage
-        );
-        if (imageUrlOrError instanceof Error) {
-          error = imageUrlOrError;
-        } else {
-          const blogData: BlogPostBody = {
-            title: values.title,
-            description: values.description,
-            categories: ["coding"],
-            coverImageUrl: imageUrlOrError,
-          };
-          const blogOrError = await blogService.createBlog(
-            blogData,
-            tokenOrError
-          );
-          if (blogOrError instanceof Error) {
-            error = blogOrError;
-          }
+        const blogData: BlogPostBody = {
+          title: values.title,
+          description: values.description,
+          categories: ["coding"],
+          coverImageUrl: imageUrlOrError,
+        };
+        const blogOrError = await blogService.createBlog(blogData);
+        if (blogOrError instanceof Error) {
+          error = blogOrError;
         }
       }
       if (error) {
