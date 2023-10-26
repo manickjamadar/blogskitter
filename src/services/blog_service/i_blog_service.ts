@@ -8,5 +8,9 @@ abstract class IBlogService {
     skip: number
   ): Promise<IBlogModel[] | Error>;
   abstract deleteBlog(id: string): Promise<IBlogModel | Error>;
+  abstract updateBlog(data: {
+    blogData: BlogPostBody;
+    blogId: string;
+  }): Promise<IBlogModel | Error>;
 }
 export default IBlogService;

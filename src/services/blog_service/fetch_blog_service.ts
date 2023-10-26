@@ -5,6 +5,7 @@ import { IBlogModel } from "@/domain/models/blog";
 import GetBlogsResponseBody from "@/domain/response_bodies/blog/get_blogs_response_body";
 import IAuthService from "../auth_service/i_auth_service";
 import DeleteBlogResponseBody from "@/domain/response_bodies/delete_blog_response_body";
+import UpdateBlogResponseBody from "@/domain/response_bodies/blog/update_blog_response_body";
 
 class FetchBlogService implements IBlogService {
   public authService: IAuthService;
@@ -47,6 +48,37 @@ class FetchBlogService implements IBlogService {
       }
       const data = (await res.json()) as GetBlogsResponseBody;
       return data.blogs;
+    } catch (error) {
+      if (error instanceof Error) {
+        return error;
+      }
+      return new Error(defaultErrorMessage);
+    }
+  }
+  async updateBlog(data: {
+    blogData: BlogPostBody;
+    blogId: string;
+  }): Promise<IBlogModel | Error> {
+    const defaultErrorMessage = "Blog Updating failed";
+    const { blogData, blogId } = data;
+    const blogUpdateUrl = "/api/blog/" + blogId;
+    try {
+      const tokenOrError = await this.authService.getUserToken();
+      if (tokenOrError instanceof Error) {
+        throw tokenOrError;
+      }
+      const res = await fetch(blogUpdateUrl, {
+        method: "PATCH",
+        body: JSON.stringify(blogData),
+        headers: {
+          Authorization: `Bearer ${tokenOrError}`,
+        },
+      });
+      if (!res.ok) {
+        throw new Error(defaultErrorMessage);
+      }
+      const data = (await res.json()) as UpdateBlogResponseBody;
+      return data.blog;
     } catch (error) {
       if (error instanceof Error) {
         return error;
