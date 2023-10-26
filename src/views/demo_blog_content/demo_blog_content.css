@@ -1,0 +1,18 @@
+.demoBlogContentContainer{
+    @apply py-4;
+}
+.demoBlogContentContainer h1{
+    @apply text-2xl font-bold mb-2 capitalize text-gray-700;
+}
+.demoBlogContentContainer h2{
+    @apply text-xl font-bold mb-2 capitalize text-gray-700;
+}
+.demoBlogContentContainer p{
+    @apply text-base mb-2 capitalize text-gray-600 leading-7;
+}
+.demoBlogContentContainer ol{
+    @apply list-decimal pl-8 py-2 italic text-gray-600 leading-7;
+}
+.demoBlogContentContainer ul{
+    @apply list-disc pl-8 py-2 italic text-gray-600 leading-7;
+}

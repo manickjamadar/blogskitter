@@ -4,6 +4,7 @@ import React from "react";
 import formatDate from "@/utils/format_date";
 import CustomImage from "@/views/custom_image/custom_image";
 import Link from "next/link";
+import DemoBlogContent from "@/views/demo_blog_content/demo_blog_content";
 const BlogPage = async ({ params }: { params: { id: string } }) => {
   const blogId = params.id;
   const blogOrError = await apiBlogService.getBlogById(blogId);
@@ -23,7 +24,7 @@ const BlogPage = async ({ params }: { params: { id: string } }) => {
   }
   const { coverImageUrl, createdDate, description, title } = blogOrError;
   return (
-    <div className="p-10 max-w-xl mx-auto">
+    <div className="p-10 max-w-2xl mx-auto">
       <div className="rounded-lg overflow-hidden mb-4">
         <CustomImage
           src={coverImageUrl}
@@ -36,6 +37,7 @@ const BlogPage = async ({ params }: { params: { id: string } }) => {
         Created at {formatDate(new Date(createdDate))}
       </p>
       <p className="text-gray-600">{description}</p>
+      <DemoBlogContent />
     </div>
   );
 };
