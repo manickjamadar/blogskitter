@@ -14,5 +14,9 @@ abstract class IApiBlogService {
   abstract getBlogById(id: string): Promise<IBlogModel | ApiError>;
   abstract getBlogsByUserId(userId: string): Promise<IBlogModel[] | ApiError>;
   abstract deleteBlog(id: string): Promise<void | ApiError>;
+  abstract updateBlog(data: {
+    blogData: Partial<BlogPostBody>;
+    blogId: string;
+  }): Promise<IBlogModel | ApiError>;
 }
 export default IApiBlogService;

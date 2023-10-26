@@ -67,6 +67,39 @@ class FirebaseApiBlogService implements IApiBlogService {
       return new ApiError("Fetching Blog Failed", 400);
     }
   }
+  async updateBlog({
+    blogData,
+    blogId,
+  }: {
+    blogData: Partial<BlogPostBody>;
+    blogId: string;
+  }): Promise<IBlogModel | ApiError> {
+    const { title, coverImageUrl, description, categories } = blogData;
+    try {
+      const oldBlogOrError = await this.getBlogById(blogId);
+      if (oldBlogOrError instanceof ApiError) {
+        return oldBlogOrError;
+      }
+      const blogModel = new BlogModel({
+        id: oldBlogOrError.id,
+        title: title || oldBlogOrError.title,
+        categories: categories
+          ? [...(categories as string[])]
+          : [...oldBlogOrError.categories],
+        coverImageUrl: coverImageUrl || oldBlogOrError.coverImageUrl,
+        description: description || oldBlogOrError.description,
+        uid: oldBlogOrError.uid,
+        createdDate: new Date().toISOString(),
+      });
+      const blogDocRef = FirebaseApiBlogService.getCollection().doc(
+        oldBlogOrError.id
+      );
+      await blogDocRef.set(blogModel.toFirebase(), { merge: true });
+      return blogModel.toJson();
+    } catch (error) {
+      return new ApiError("Blog Updating failed", 400);
+    }
+  }
   async createBlog(
     blogData: BlogPostBody,
     userId: string
