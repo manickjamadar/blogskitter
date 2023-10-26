@@ -3,6 +3,7 @@ import { IBlogModel } from "@/domain/models/blog";
 import React, { useState } from "react";
 import ProfileBlogCard from "../profile_blog_card/profile_blog_card";
 import { useRouter } from "next/navigation";
+import Modal from "../modal/modal";
 interface Props {
   blogs: IBlogModel[];
 }
@@ -14,6 +15,15 @@ const deleteBlog = (id: string): Promise<string | Error> => {
   });
 };
 const ProfileBlogList: React.FC<Props> = ({ blogs }) => {
+  const [deletableBlog, setDeletableBlog] = useState<IBlogModel | undefined>(
+    undefined
+  );
+  const showDeleteModal = (blog: IBlogModel) => {
+    setDeletableBlog(blog);
+  };
+  const closeDeleteModal = () => {
+    setDeletableBlog(undefined);
+  };
   const router = useRouter();
   const [blogList, setBlogList] = useState(blogs);
   const handleDelete = async (blog: IBlogModel) => {
@@ -43,16 +53,40 @@ const ProfileBlogList: React.FC<Props> = ({ blogs }) => {
     );
   }
   return (
-    <div className="max-w-2xl p-5 mx-auto">
-      {blogList.map((blog) => (
-        <ProfileBlogCard
-          key={blog.id}
-          blog={blog}
-          onDeleteClick={() => handleDelete(blog)}
-          onEditClick={() => router.push(`/blog/edit/${blog.id}`)}
-        />
-      ))}
-    </div>
+    <>
+      <div className="max-w-2xl p-5 mx-auto">
+        {blogList.map((blog) => (
+          <ProfileBlogCard
+            key={blog.id}
+            blog={blog}
+            onDeleteClick={() => showDeleteModal(blog)}
+            onEditClick={() => router.push(`/blog/edit/${blog.id}`)}
+          />
+        ))}
+      </div>
+      <Modal isOpen={!!deletableBlog} onClose={closeDeleteModal}>
+        <div className="px-6 py-4 flex flex-col">
+          <p className="text-xl font-medium text-gray-600 mb-2">Delete Blog</p>
+          <p className="text-gray-500 mb-6">
+            Are you sure you want to delete blog?
+          </p>
+          <div className="flex gap-3 justify-end">
+            <button onClick={closeDeleteModal}>Cancel</button>
+            <button
+              className="errorButton"
+              onClick={() => {
+                if (deletableBlog) {
+                  handleDelete(deletableBlog);
+                }
+                closeDeleteModal();
+              }}
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </Modal>
+    </>
   );
 };
 
