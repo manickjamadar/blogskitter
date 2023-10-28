@@ -5,6 +5,7 @@ import ProfileBlogCard from "../profile_blog_card/profile_blog_card";
 import { useRouter } from "next/navigation";
 import Modal from "../modal/modal";
 import { blogService } from "@/services";
+import DeleteConfirmationModal from "../delete_confirmation_modal/delete_confirmation_modal";
 interface Props {
   blogs: IBlogModel[];
 }
@@ -59,26 +60,17 @@ const ProfileBlogList: React.FC<Props> = ({ blogs }) => {
         ))}
       </div>
       <Modal isOpen={!!deletableBlog} onClose={closeDeleteModal}>
-        <div className="px-6 py-4 flex flex-col">
-          <p className="text-xl font-medium text-gray-600 mb-2">Delete Blog</p>
-          <p className="text-gray-500 mb-6">
-            Are you sure you want to delete blog?
-          </p>
-          <div className="flex gap-3 justify-end">
-            <button onClick={closeDeleteModal}>Cancel</button>
-            <button
-              className="errorButton"
-              onClick={() => {
-                if (deletableBlog) {
-                  handleDelete(deletableBlog);
-                }
-                closeDeleteModal();
-              }}
-            >
-              Delete
-            </button>
-          </div>
-        </div>
+        <DeleteConfirmationModal
+          onDelete={() => {
+            if (deletableBlog) {
+              handleDelete(deletableBlog);
+            }
+            closeDeleteModal();
+          }}
+          onCancel={closeDeleteModal}
+          title="Are you sure?"
+          description="Do you really want to delete it? This process cannot be undone"
+        />
       </Modal>
     </>
   );
