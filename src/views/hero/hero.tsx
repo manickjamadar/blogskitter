@@ -12,7 +12,9 @@ const Hero = () => {
         topic
       </p>
       <div className="flex justify-center items-center">
-        <button className="primaryButton">Start Reading</button>
+        <a className="primaryButton" href="/#latest-articles">
+          Explore Articles
+        </a>
       </div>
     </div>
   );
