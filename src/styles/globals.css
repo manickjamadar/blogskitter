@@ -18,13 +18,13 @@
     @apply border-red-500 focus:border-red-500;
 }
 .primaryButton{
-    @apply bg-blue-500 px-4 py-2 text-white rounded hover:bg-blue-600 cursor-pointer transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed;
+    @apply text-sm font-medium px-4 py-2 border border-blue-600 bg-blue-500 text-white rounded hover:bg-blue-600 cursor-pointer transition-colors disabled:bg-gray-400 disabled:border-gray-400 disabled:cursor-not-allowed;
 }
 .errorButton{
     @apply bg-red-500 px-4 py-2 text-white rounded hover:bg-red-600 cursor-pointer transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed;
 }
 .outlineButton{
-    @apply border border-blue-500 rounded px-4 py-2 disabled:border-gray-400 disabled:text-gray-500 disabled:cursor-not-allowed;
+    @apply border border-gray-300 rounded text-sm px-4 py-2 font-medium text-gray-700 hover:bg-gray-100 transition-colors disabled:border-gray-400 disabled:text-gray-500 disabled:bg-gray-100 disabled:cursor-not-allowed;
 }
 .roundedOutlineButton{
     @apply rounded-full py-1 px-8 border text-sm bg-gray-50 text-gray-600 hover:cursor-pointer hover:border-blue-200 hover:text-blue-600 hover:bg-blue-50 transition-colors;
