@@ -31,7 +31,7 @@ const Header = () => {
   };
   return (
     <>
-      <header className="flex justify-between px-8 py-4 items-center">
+      <header className="flex justify-between px-8 py-4 items-center flex-wrap gap-3">
         <div className="flex items-center gap-4">
           <Logo size={36} />
           <h1 className="hidden sm:block font-bold uppercase text-xl text-gray-600">
