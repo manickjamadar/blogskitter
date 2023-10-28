@@ -11,6 +11,8 @@ import { useAppDispatch } from "@/store/store";
 import { AuthActions } from "@/store/slices/auth_slice";
 import HeaderProfile from "./header_profile";
 import HeaderProfileSkeleton from "./header_profile_skeleton";
+import Image from "next/image";
+import Logo from "../logo/logo";
 
 const Header = () => {
   const dispatch = useAppDispatch();
@@ -29,10 +31,13 @@ const Header = () => {
   };
   return (
     <>
-      <header className="flex justify-between p-4 items-center">
-        <h1 className="text-xl">
-          <Link href="/">Blogskitter</Link>
-        </h1>
+      <header className="flex justify-between px-8 py-4 items-center">
+        <div className="flex items-center gap-4">
+          <Logo size={36} />
+          <h1 className="hidden sm:block font-bold uppercase text-xl text-gray-600">
+            <Link href="/">BlogSkitter</Link>
+          </h1>
+        </div>
         <div className="flex gap-4 items-center">
           {isAuthenticating && <HeaderProfileSkeleton />}
           {!isAuthenticating && isLoggedOut && (
