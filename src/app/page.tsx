@@ -48,11 +48,11 @@ export default function HomePage() {
       </p>
     );
   }
-  const demoBlogs = getDemoBlogData(24, 0);
+  // const demoBlogs = getDemoBlogData(12, 0);
   const topBlog = blogs[0];
-  const sideBlogs = blogs.slice(1, 6);
-  const featuredArticles = blogs.slice(6, 12);
-  const latestArticles = blogs.slice(12);
+  const sideBlogs = blogs.slice(-5);
+  const featuredArticles = blogs.slice(1, 7);
+  const latestArticles = blogs.slice(7);
   return (
     <Container>
       <Hero />
