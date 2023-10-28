@@ -14,7 +14,7 @@ const BlogCard: React.FC<Props> = ({ blog, onClick }) => {
   return (
     <div
       onClick={onClick}
-      className="cursor-pointer flex flex-col rounded-lg overflow-hidden w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(33%-1.5rem)] max-w-xs shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px]"
+      className="cursor-pointer flex flex-col rounded-lg overflow-hidden w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(33%-1.5rem)] max-w-xs shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px] hover:-translate-y-1 hover:shadow-2xl hover:shadow-blue-500/20 transition-all "
     >
       <CustomImage
         src={blog.coverImageUrl}
