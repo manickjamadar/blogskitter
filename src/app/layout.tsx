@@ -5,6 +5,7 @@ import StoreProvider from "@/store/store_provider";
 import AuthProvider from "@/views/auth_provider/auth_provider";
 import Header from "@/views/header/header";
 import BlogProvider from "@/views/blog_provider/blog_provider";
+import Footer from "@/views/footer/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,6 +28,7 @@ export default function RootLayout({
             <BlogProvider>
               <Header />
               {children}
+              <Footer />
             </BlogProvider>
           </AuthProvider>
         </StoreProvider>
