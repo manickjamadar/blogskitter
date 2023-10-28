@@ -1,7 +1,7 @@
 import React from "react";
 const Hero = () => {
   return (
-    <div className="flex flex-col gap-6 items-center py-10 border-b">
+    <div className="flex flex-col gap-6 items-center py-10">
       <h1 className="text-center text-3xl sm:text-4xl font-bold max-w-4xl">
         Uncover fresh perspective, ideas and knowledge through the power of
         blogs
