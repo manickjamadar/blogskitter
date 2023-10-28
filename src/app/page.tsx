@@ -38,33 +38,31 @@ export default function HomePage() {
     );
   }
   return (
-    <main>
-      <Container>
-        {blogs.length > 0 && (
-          <BlogCardList
-            blogs={blogs}
-            onClick={(blog) => router.push("/blog/" + blog.id)}
-          />
-        )}
-        {isBlogsFetching && (
-          <BlogCardSkeletonList length={config.blog.fetchingLimit} />
-        )}
-        {canFetchMoreBlogs && (
-          <div className="flex justify-center mb-8">
-            <button
-              className="roundedOutlineButton"
-              onClick={handleFetchMoreBlogs}
-            >
-              Load More
-            </button>
-          </div>
-        )}
-        {isFetchedAll && (
-          <p className="text-center p-6 text-2xl font-medium text-gray-200 animate-pulse">
-            You have reached the end
-          </p>
-        )}
-      </Container>
-    </main>
+    <Container>
+      {blogs.length > 0 && (
+        <BlogCardList
+          blogs={blogs}
+          onClick={(blog) => router.push("/blog/" + blog.id)}
+        />
+      )}
+      {isBlogsFetching && (
+        <BlogCardSkeletonList length={config.blog.fetchingLimit} />
+      )}
+      {canFetchMoreBlogs && (
+        <div className="flex justify-center mb-8">
+          <button
+            className="roundedOutlineButton"
+            onClick={handleFetchMoreBlogs}
+          >
+            Load More
+          </button>
+        </div>
+      )}
+      {isFetchedAll && (
+        <p className="text-center p-6 text-2xl font-medium text-gray-200 animate-pulse">
+          You have reached the end
+        </p>
+      )}
+    </Container>
   );
 }

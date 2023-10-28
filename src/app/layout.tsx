@@ -26,9 +26,11 @@ export default function RootLayout({
         <StoreProvider>
           <AuthProvider>
             <BlogProvider>
-              <Header />
-              {children}
-              <Footer />
+              <div className="flex flex-col w-screen min-h-screen box-border max-w-full">
+                <Header />
+                <main className="flex-1">{children}</main>
+                <Footer />
+              </div>
             </BlogProvider>
           </AuthProvider>
         </StoreProvider>
