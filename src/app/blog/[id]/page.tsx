@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import LatestArticles from "@/views/latest_articles/latest_article";
 import MainArticle from "@/views/main_article/main_article";
+import Container from "@/views/container/container";
 const BlogPage = async ({ params }: { params: { id: string } }) => {
   const blogId = params.id;
   const blogOrError = await apiBlogService.getBlogById(blogId);
@@ -22,10 +23,12 @@ const BlogPage = async ({ params }: { params: { id: string } }) => {
     );
   }
   return (
-    <div>
+    <Container>
       <MainArticle blog={blogOrError} />
-      <LatestArticles />
-    </div>
+      <div className="py-10">
+        <LatestArticles />
+      </div>
+    </Container>
   );
 };
 

@@ -10,9 +10,15 @@ interface Props {
 const MainArticle: React.FC<Props> = ({ blog }) => {
   const { coverImageUrl, createdDate, description, title } = blog;
   return (
-    <div className="flex gap-10 w-10/12 pt-10 max-w-6xl mx-auto">
-      <div className="flex-[3]">
-        <p className="mb-1 text-gray-500 text-sm italic">Home / blog</p>
+    <div className="flex gap-6 mt-20">
+      <div className="w-full lg:w-2/3">
+        <p className="mb-4 text-gray-500 text-sm italic">
+          Home / blog /{" "}
+          <span className="text-gray-600 font-medium">{title}</span>
+        </p>
+        <p className="text-gray-400 italic text-sm mb-1">
+          Created at {formatDate(new Date(createdDate))}
+        </p>
         <h1 className="text-2xl font-bold mb-4 capitalize">{title}</h1>
         <div className="rounded-lg overflow-hidden mb-4">
           <CustomImage
@@ -21,13 +27,10 @@ const MainArticle: React.FC<Props> = ({ blog }) => {
             errorSrc="/images/blog-cover-error-placeholder.png"
           />
         </div>
-        <p className="text-gray-400 italic text-sm mb-4">
-          Created at {formatDate(new Date(createdDate))}
-        </p>
         <p className="text-gray-600">{description}</p>
         <DemoBlogContent />
       </div>
-      <div className="hidden lg:block flex-1 pt-7">
+      <div className="pt-16 hidden lg:block w-1/3">
         <SideArticles />
       </div>
     </div>

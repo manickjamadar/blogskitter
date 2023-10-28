@@ -7,9 +7,9 @@ import Container from "../container/container";
 
 const LatestArticles = () => {
   const router = useRouter();
-  const blogs = useAppSelector((state) => state.blogs.values).slice(0, 6);
+  const blogs = useAppSelector((state) => state.blogs.values).slice(0, 12);
   return (
-    <Container>
+    <div>
       <h3 className="text-2xl text-center text-gray-700 font-medium mb-6">
         Latest Articles
       </h3>
@@ -19,7 +19,7 @@ const LatestArticles = () => {
           router.push("/blog/" + blog.id);
         }}
       />
-    </Container>
+    </div>
   );
 };
 
