@@ -6,7 +6,7 @@ import { IoMdMail } from "react-icons/io";
 const Footer = () => {
   return (
     <footer className="bg-blue-50">
-      <div className="flex flex-col items-center gap-6 py-10 px-8">
+      <div className="flex flex-col items-center gap-6 py-12 px-8">
         <div className="flex flex-col items-center gap-2">
           <Logo size={40} />
           <h3 className="font-bold uppercase text-xl md:text-2xl text-gray-600">
