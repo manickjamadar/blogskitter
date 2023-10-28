@@ -21,7 +21,7 @@ const FullBlogCard: React.FC<Props> = ({
       <div className="overflow-hidden rounded bg-gradient-to-b from-transparent to-black/60 text-white p-6 h-full w-full flex flex-col justify-end border">
         <div>
           <div
-            className={`flex flex-col gap-1 ${showDetails ? "sm:mb-6" : ""}`}
+            className={`flex flex-col gap-1 ${showDetails ? "sm:mb-3" : ""}`}
           >
             <p className="capitalize text-lg font-medium overflow-hidden text-ellipsis whitespace-nowrap">
               {title}
