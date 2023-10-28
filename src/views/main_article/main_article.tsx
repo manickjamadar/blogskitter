@@ -31,7 +31,7 @@ const MainArticle: React.FC<Props> = ({ blog }) => {
         <DemoBlogContent />
       </div>
       <div className="pt-16 hidden lg:block w-1/3">
-        <SideArticles />
+        <SideArticles excludeBlogId={blog.id} />
       </div>
     </div>
   );

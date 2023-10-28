@@ -3,13 +3,14 @@ import { useAppSelector } from "@/store/store";
 import React from "react";
 import { useRouter } from "next/navigation";
 import SideBlogCard from "../side_blog_card/side_blog_card";
-import { getDemoBlogData } from "@/domain/data/demo_blog_data";
-import FullBlogCard from "../full_blog_card/full_blog_card";
-import BlogCard from "../blog_card/blog_card";
-
-const SideArticles = () => {
+interface Props {
+  excludeBlogId?: string;
+}
+const SideArticles: React.FC<Props> = ({ excludeBlogId = "" }) => {
   const router = useRouter();
-  const blogs = useAppSelector((state) => state.blogs.values).slice(0, 5);
+  const blogs = useAppSelector((state) => state.blogs.values)
+    .filter((b) => b.id !== excludeBlogId)
+    .slice(0, 5);
   const relatedArticles = blogs.slice(0, 5);
   return (
     <div className="">
