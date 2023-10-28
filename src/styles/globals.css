@@ -6,7 +6,7 @@
     @apply flex flex-col;
 }
 .inputContainer label{
-    @apply mb-2;
+    @apply mb-2 text-sm text-gray-600;
 }
 .inputContainer input{
     @apply border rounded px-4 py-2 text-sm outline-none focus:border;
