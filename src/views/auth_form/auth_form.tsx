@@ -9,6 +9,7 @@ import { authService } from "@/services";
 import InputField from "../input_field/input_field";
 import { useAppDispatch } from "@/store/store";
 import { AuthActions } from "@/store/slices/auth_slice";
+import Logo from "../logo/logo";
 export interface AuthFormData {
   name?: string;
   email: string;
@@ -77,7 +78,12 @@ const AuthForm: React.FC<Props> = ({
   });
   return (
     <div className="p-10">
-      <h1 className="text-center text-xl">BlogSkitter</h1>
+      <div className="flex justify-center items-center mb-2">
+        <Logo size={36} />
+      </div>
+      <h1 className="text-center text-lg font-medium text-gray-700">
+        BlogSkitter
+      </h1>
       <p className="text-center mb-4 mt-2 text-sm text-gray-500">
         {isSigningup ? "Create your account" : "Sign In to your account"}
       </p>
@@ -146,7 +152,7 @@ const AuthForm: React.FC<Props> = ({
         <p className="text-center text-sm text-gray-600">
           {isSigningup ? "Already" : "Don't"} have an account?{" "}
           <span
-            className="cursor-pointer text-blue-500"
+            className="cursor-pointer text-blue-500 hover:text-blue-700"
             onClick={() => {
               isSigningup
                 ? onSigninClick && onSigninClick()
