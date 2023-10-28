@@ -4,22 +4,13 @@ import BlogCard from "../blog_card/blog_card";
 interface Props {
   blogs: IBlogModel[];
   onClick?: (blog: IBlogModel) => void;
-  vertical?: boolean;
 }
-const BlogCardList: React.FC<Props> = ({
-  blogs,
-  onClick,
-  vertical = false,
-}) => {
+const BlogCardList: React.FC<Props> = ({ blogs, onClick }) => {
   if (blogs.length < 1) {
     return null;
   }
   return (
-    <div
-      className={`flex ${
-        vertical ? "flex-col" : "flex-row"
-      } gap-6 flex-wrap box-border justify-center`}
-    >
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       {blogs.map((blog) => (
         <BlogCard
           key={blog.id}
