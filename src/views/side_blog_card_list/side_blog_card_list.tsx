@@ -3,12 +3,17 @@ import React from "react";
 import SideBlogCard from "../side_blog_card/side_blog_card";
 interface Props {
   blogs: IBlogModel[];
+  onClick?: (blog: IBlogModel) => void;
 }
-const SideBlogCardList: React.FC<Props> = ({ blogs }) => {
+const SideBlogCardList: React.FC<Props> = ({ blogs, onClick }) => {
   return (
     <div className="flex flex-col gap-4">
       {blogs.map((blog) => (
-        <SideBlogCard key={blog.id} blog={blog} />
+        <SideBlogCard
+          key={blog.id}
+          blog={blog}
+          onClick={() => onClick && onClick(blog)}
+        />
       ))}
     </div>
   );
