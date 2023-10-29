@@ -75,7 +75,7 @@ const ProfileBlogList: React.FC<Props> = ({ blogs }) => {
           breakLabel="..."
           nextLabel={<IoIosArrowForward />}
           onPageChange={handlePageClick}
-          pageRangeDisplayed={1}
+          pageRangeDisplayed={2}
           pageCount={pageCount}
           previousLabel={<IoIosArrowBack />}
           renderOnZeroPageCount={null}
