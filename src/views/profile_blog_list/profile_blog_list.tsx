@@ -31,7 +31,7 @@ const ProfileBlogList: React.FC<Props> = ({ blogs }) => {
     handlePageClick,
   } = usePaginate({
     items: blogList,
-    itemsPerPage: 5,
+    itemsPerPage: 10,
   });
   const handleDelete = async (blog: IBlogModel) => {
     let deletableBlogIndex = -1;
