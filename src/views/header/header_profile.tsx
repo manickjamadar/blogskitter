@@ -33,7 +33,7 @@ const HeaderProfile: React.FC<Props> = ({
             alt="profile picture"
           />
         </div>
-        <p className="text-sm">{formatFullName(name)}</p>
+        <p className="text-sm capitalize">{formatFullName(name)}</p>
       </div>
       {!hideAddButton && (
         <button
