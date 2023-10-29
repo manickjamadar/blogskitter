@@ -1,5 +1,6 @@
 import React from "react";
 import { AiOutlineClose } from "react-icons/ai";
+import { BiSolidError } from "react-icons/bi";
 interface Props {
   title: string;
   description: string;
@@ -14,8 +15,8 @@ const DeleteConfirmationModal: React.FC<Props> = ({
 }) => {
   return (
     <div className="p-6 flex flex-col gap-4 items-center">
-      <div className="text-2xl w-14 h-14 rounded-full border-2 border-red-500 text-red-500 flex justify-center items-center">
-        <AiOutlineClose />
+      <div className="text-3xl w-16 h-16 rounded-full border-red-400 bg-red-50 text-red-500 flex justify-center items-center">
+        <BiSolidError />
       </div>
       <h3 className="text-xl text-gray-600">{title}</h3>
       <p className="text-sm text-gray-400 text-center max-w-xs">
