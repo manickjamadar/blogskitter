@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import FullBlogCardList from "@/views/full_blog_card_list/full_blog_card_list";
 import SideBlogCardList from "@/views/side_blog_card_list/side_blog_card_list";
 import { IBlogModel } from "@/domain/models/blog";
+import HeroBlogSkeleton from "@/views/hero_blog_skeleton/hero_blog_skeleton";
 
 export default function HomePage() {
   const dispatch = useAppDispatch();
@@ -48,15 +49,21 @@ export default function HomePage() {
       </p>
     );
   }
-  // const demoBlogs = getDemoBlogData(12, 0);
+  // const demoBlogs = getDemoBlogData(19, 0);
   const topBlog = blogs[0];
   const sideBlogs = blogs.slice(-5);
   const featuredArticles = blogs.slice(1, 7);
   const latestArticles = blogs.slice(7);
+  const isBlogsEmpty = blogs.length === 0;
   return (
     <Container>
       <Hero />
-      <div className="flex gap-6">
+      {isBlogsFetching && isBlogsEmpty && (
+        <div className="mb-8">
+          <HeroBlogSkeleton />
+        </div>
+      )}
+      <div className="flex gap-6 mb-8">
         {topBlog && sideBlogs.length < 1 && (
           <FullBlogCard
             blog={topBlog}
@@ -80,7 +87,7 @@ export default function HomePage() {
         )}
       </div>
       {featuredArticles.length > 0 && (
-        <div className="py-8">
+        <div className="mb-8">
           <h2 className="font-medium text-2xl text-center sm:text-left mb-6">
             Featured Articles
           </h2>
@@ -91,7 +98,7 @@ export default function HomePage() {
         </div>
       )}
       {latestArticles.length > 0 && (
-        <div className="py-8" id="latest-articles">
+        <div className="mb-8" id="latest-articles">
           <h2 className="font-medium text-2xl text-center sm:text-left mb-6">
             Latest Articles
           </h2>
@@ -99,7 +106,9 @@ export default function HomePage() {
         </div>
       )}
       {isBlogsFetching && (
-        <BlogCardSkeletonList length={config.blog.fetchingLimit} />
+        <div className="mb-8">
+          <BlogCardSkeletonList length={config.blog.fetchingLimit} />
+        </div>
       )}
       {canFetchMoreBlogs && (
         <div className="flex justify-center mb-8">
@@ -112,7 +121,7 @@ export default function HomePage() {
         </div>
       )}
       {isFetchedAll && (
-        <p className="text-center p-6 text-2xl font-medium text-gray-200 animate-pulse">
+        <p className="text-center pb-10 text-2xl font-medium text-gray-200 animate-pulse">
           You have reached the end
         </p>
       )}
