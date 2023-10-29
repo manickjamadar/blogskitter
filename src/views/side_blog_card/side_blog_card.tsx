@@ -25,7 +25,7 @@ const SideBlogCard: React.FC<Props> = ({ blog, onClick }) => {
         <p className="text-[12px] text-gray-400 italic">
           {formatDate(new Date(blog.createdDate))}
         </p>
-        <p className="text-sm font-medium overflow-hidden text-ellipsis whitespace-nowrap">
+        <p className="text-sm font-medium overflow-hidden text-ellipsis whitespace-nowrap capitalize">
           {blog.title}
         </p>
         <p className="text-[12px] text-blue-500 hover:text-blue-600 transition-colors">
