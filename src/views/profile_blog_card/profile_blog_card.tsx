@@ -5,24 +5,32 @@ import RawImage from "../raw_image/raw_image";
 import { MdEdit, MdDelete } from "react-icons/md";
 interface Props {
   blog: IBlogModel;
+  onClick?: () => void;
   onDeleteClick?: () => void;
   onEditClick?: () => void;
 }
 const ProfileBlogCard: React.FC<Props> = ({
   blog,
+  onClick,
   onDeleteClick,
   onEditClick,
 }) => {
   return (
-    <div className="border-b rounded p-4 flex gap-4 overflow-hidden text-ellipsis items-center">
-      <div className="w-20 min-w-[5rem] self-stretch bg-gray-100 rounded overflow-hidden relative">
+    <div className="shadow-sm hover:shadow-md hover:shadow-gray-200 hover:-translate-y-1  transition-all rounded p-4 flex gap-4 overflow-hidden text-ellipsis items-center">
+      <div
+        className="w-20 min-w-[5rem] self-stretch bg-gray-100 rounded overflow-hidden relative cursor-pointer"
+        onClick={onClick}
+      >
         <RawImage
           src={blog.coverImageUrl}
           errorSrc="/images/blog-cover-error-placeholder.png"
           alt="blog cover image"
         />
       </div>
-      <div className="flex-1 overflow-hidden text-ellipsis">
+      <div
+        className="flex-1 overflow-hidden text-ellipsis cursor-pointer"
+        onClick={onClick}
+      >
         <h3 className="capitalize font-bold text-gray-600 overflow-hidden whitespace-nowrap text-ellipsis">
           {blog.title}
         </h3>

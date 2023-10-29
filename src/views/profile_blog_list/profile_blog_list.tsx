@@ -65,6 +65,7 @@ const ProfileBlogList: React.FC<Props> = ({ blogs }) => {
         <ProfileBlogCard
           key={blog.id}
           blog={blog}
+          onClick={() => router.push(`/blog/${blog.id}`)}
           onDeleteClick={() => showDeleteModal(blog)}
           onEditClick={() => router.push(`/blog/edit/${blog.id}`)}
         />
