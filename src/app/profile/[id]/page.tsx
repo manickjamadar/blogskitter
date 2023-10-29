@@ -1,6 +1,7 @@
 import { apiAuthService, apiBlogService } from "@/api_services";
 import ApiError from "@/domain/error/api_error";
 import AuthorizedPage from "@/views/authorized_page/authorized_page";
+import Container from "@/views/container/container";
 import Profile from "@/views/profile/profile";
 import ProfileBlogList from "@/views/profile_blog_list/profile_blog_list";
 import React from "react";
@@ -16,10 +17,12 @@ const ProfilePage = async ({ params }: { params: { id: string } }) => {
   }
   return (
     <AuthorizedPage userId={profileId}>
-      <div className="py-4">
+      <Container>
         <Profile email={userOrError.email} name={userOrError.name} />
-        <ProfileBlogList blogs={blogsOrError} />
-      </div>
+        <div className="max-w-2xl mx-auto py-10">
+          <ProfileBlogList blogs={blogsOrError} />
+        </div>
+      </Container>
     </AuthorizedPage>
   );
 };

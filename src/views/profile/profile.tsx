@@ -7,7 +7,7 @@ interface Props {
 }
 const Profile: React.FC<Props> = ({ name, email }) => {
   return (
-    <div className="flex flex-col gap-3 p-3">
+    <div className="flex flex-col gap-3 py-3">
       <div className="w-28 h-28 rounded-full bg-gray-100 mx-auto relative overflow-hidden">
         <Image
           src={profilePic}
