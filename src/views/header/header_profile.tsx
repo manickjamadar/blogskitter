@@ -1,7 +1,7 @@
 "use client";
 import formatFullName from "@/utils/format_full_name";
 import profilePic from "../../assets/images/profile-pic.png";
-import { AiOutlinePoweroff, AiOutlinePlus } from "react-icons/ai";
+import { AiOutlineLogout, AiOutlinePlus } from "react-icons/ai";
 import React from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -45,11 +45,11 @@ const HeaderProfile: React.FC<Props> = ({
         </button>
       )}
       <button
-        className="border w-9 h-9 rounded-full flex justify-center items-center text-red-600 hover:border-red-300 hover:bg-red-50 transition-colors"
+        className="border -rotate-90 w-9 h-9 rounded-full flex justify-center items-center text-red-600 hover:border-red-300 hover:bg-red-50 transition-colors"
         title="Log Out"
         onClick={onLogoutClick}
       >
-        <AiOutlinePoweroff />
+        <AiOutlineLogout />
       </button>
     </div>
   );
