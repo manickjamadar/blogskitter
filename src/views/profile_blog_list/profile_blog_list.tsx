@@ -6,6 +6,10 @@ import { useRouter } from "next/navigation";
 import Modal from "../modal/modal";
 import { blogService } from "@/services";
 import DeleteConfirmationModal from "../delete_confirmation_modal/delete_confirmation_modal";
+import ReactPaginate from "react-paginate";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import usePaginate from "@/hooks/use_paginate";
+import { getDemoBlogData } from "@/domain/data/demo_blog_data";
 interface Props {
   blogs: IBlogModel[];
 }
@@ -21,6 +25,14 @@ const ProfileBlogList: React.FC<Props> = ({ blogs }) => {
   };
   const router = useRouter();
   const [blogList, setBlogList] = useState(blogs);
+  const {
+    pageCount,
+    currentItems: currentBlogs,
+    handlePageClick,
+  } = usePaginate({
+    items: blogList,
+    itemsPerPage: 5,
+  });
   const handleDelete = async (blog: IBlogModel) => {
     let deletableBlogIndex = -1;
     let deletableBlog: IBlogModel | undefined;
@@ -49,15 +61,25 @@ const ProfileBlogList: React.FC<Props> = ({ blogs }) => {
   }
   return (
     <>
-      <div className="max-w-2xl p-5 mx-auto">
-        {blogList.map((blog) => (
-          <ProfileBlogCard
-            key={blog.id}
-            blog={blog}
-            onDeleteClick={() => showDeleteModal(blog)}
-            onEditClick={() => router.push(`/blog/edit/${blog.id}`)}
-          />
-        ))}
+      {currentBlogs.map((blog) => (
+        <ProfileBlogCard
+          key={blog.id}
+          blog={blog}
+          onDeleteClick={() => showDeleteModal(blog)}
+          onEditClick={() => router.push(`/blog/edit/${blog.id}`)}
+        />
+      ))}
+      <div className="mt-10">
+        <ReactPaginate
+          breakLabel="..."
+          nextLabel={<IoIosArrowForward />}
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={1}
+          pageCount={pageCount}
+          previousLabel={<IoIosArrowBack />}
+          renderOnZeroPageCount={null}
+          containerClassName="paginateContainer"
+        />
       </div>
       <Modal isOpen={!!deletableBlog} onClose={closeDeleteModal}>
         <DeleteConfirmationModal
