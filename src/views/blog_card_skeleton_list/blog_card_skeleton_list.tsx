@@ -5,7 +5,7 @@ interface Props {
 }
 const BlogCardSkeletonList: React.FC<Props> = ({ length }) => {
   return (
-    <div className="flex p-10 gap-6 flex-wrap box-border justify-center">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       {Array.from({ length }, (_, index) => (
         <BlogCardSkeleton key={index} />
       ))}
