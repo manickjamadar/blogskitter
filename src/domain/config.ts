@@ -1,6 +1,7 @@
 const config = {
   blog: {
-    fetchingLimit: 6,
+    initialFetchingLimit: 19,
+    fetchingLimit: 12,
     titleLimit: 60,
     descriptionLimit: 80,
   },

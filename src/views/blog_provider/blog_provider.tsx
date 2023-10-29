@@ -24,7 +24,7 @@ const BlogProvider = ({ children }: { children: React.ReactNode }) => {
     if (shouldFetchBlogsInitially) {
       dispatch(
         BlogsActions.fetchBlogs({
-          limit: config.blog.fetchingLimit,
+          limit: config.blog.initialFetchingLimit,
           skip: 0,
           isInitialFetching: true,
         })
