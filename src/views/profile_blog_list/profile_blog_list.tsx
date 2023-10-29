@@ -7,9 +7,7 @@ import Modal from "../modal/modal";
 import { blogService } from "@/services";
 import DeleteConfirmationModal from "../delete_confirmation_modal/delete_confirmation_modal";
 import ReactPaginate from "react-paginate";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import usePaginate from "@/hooks/use_paginate";
-import { getDemoBlogData } from "@/domain/data/demo_blog_data";
 interface Props {
   blogs: IBlogModel[];
 }
@@ -73,11 +71,13 @@ const ProfileBlogList: React.FC<Props> = ({ blogs }) => {
       <div className="mt-10">
         <ReactPaginate
           breakLabel="..."
-          nextLabel={<IoIosArrowForward />}
+          nextLabel=">"
+          // nextLabel={<IoIosArrowForward />}
           onPageChange={handlePageClick}
           pageRangeDisplayed={2}
           pageCount={pageCount}
-          previousLabel={<IoIosArrowBack />}
+          previousLabel="<"
+          // previousLabel={<IoIosArrowBack />}
           renderOnZeroPageCount={null}
           containerClassName="paginateContainer"
         />
