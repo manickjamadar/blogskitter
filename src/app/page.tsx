@@ -80,7 +80,7 @@ export default function HomePage() {
         )}
       </div>
       {featuredArticles.length > 0 && (
-        <div className="py-8 border-b">
+        <div className="py-8">
           <h2 className="font-medium text-2xl text-center sm:text-left mb-6">
             Featured Articles
           </h2>
