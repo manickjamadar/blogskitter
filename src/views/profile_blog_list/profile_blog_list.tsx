@@ -6,8 +6,8 @@ import { useRouter } from "next/navigation";
 import Modal from "../modal/modal";
 import { blogService } from "@/services";
 import DeleteConfirmationModal from "../delete_confirmation_modal/delete_confirmation_modal";
-import ReactPaginate from "react-paginate";
 import usePaginate from "@/hooks/use_paginate";
+import Paginate from "../paginate/paginate";
 interface Props {
   blogs: IBlogModel[];
 }
@@ -69,18 +69,7 @@ const ProfileBlogList: React.FC<Props> = ({ blogs }) => {
         />
       ))}
       <div className="mt-10">
-        <ReactPaginate
-          breakLabel="..."
-          nextLabel=">"
-          // nextLabel={<IoIosArrowForward />}
-          onPageChange={handlePageClick}
-          pageRangeDisplayed={2}
-          pageCount={pageCount}
-          previousLabel="<"
-          // previousLabel={<IoIosArrowBack />}
-          renderOnZeroPageCount={null}
-          containerClassName="paginateContainer"
-        />
+        <Paginate onPageChange={handlePageClick} pageCount={pageCount} />
       </div>
       <Modal isOpen={!!deletableBlog} onClose={closeDeleteModal}>
         <DeleteConfirmationModal
