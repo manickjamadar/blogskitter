@@ -121,7 +121,7 @@ export default function HomePage() {
         </div>
       )}
       {isFetchedAll && (
-        <p className="text-center pb-10 text-2xl font-medium text-gray-200 animate-pulse">
+        <p className="text-center pb-10 text-2xl font-medium text-gray-300">
           You have reached the end
         </p>
       )}
