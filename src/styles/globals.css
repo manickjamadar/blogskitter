@@ -35,14 +35,20 @@ html {
     @apply text-xs text-red-500;
 }
 .paginateContainer{
-    @apply flex justify-center gap-3 flex-wrap;
+    @apply flex justify-center gap-3 flex-wrap items-center select-none;
 }
-.paginateContainer li a{
+.paginateContainer li.next,.paginateContainer li.previous {
     @apply w-10 h-10 cursor-pointer text-sm font-medium text-gray-500 border rounded-full flex justify-center items-center hover:border-blue-400 hover:bg-blue-50 hover:text-blue-500 transition-colors;
 }
-.paginateContainer li.selected a{
+/* .paginateContainer li.selected {
     @apply bg-blue-500 text-white border-blue-500;
+} */
+.paginateContainer li.page{
+    @apply w-3 h-3 rounded-full bg-gray-200 hover:bg-gray-400 transition-colors cursor-pointer;
 }
-.paginateContainer li.previous.disabled a,.paginateContainer li.next.disabled a{
+.paginateContainer li.page.selected{
+    @apply bg-blue-500;
+}
+.paginateContainer li.previous.disabled,.paginateContainer li.next.disabled{
     @apply bg-gray-100 text-gray-400 cursor-not-allowed hover:border-gray-200;
 }
