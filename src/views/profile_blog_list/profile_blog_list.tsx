@@ -59,15 +59,23 @@ const ProfileBlogList: React.FC<Props> = ({ blogs }) => {
   }
   return (
     <>
-      {currentBlogs.map((blog) => (
-        <ProfileBlogCard
-          key={blog.id}
-          blog={blog}
-          onClick={() => router.push(`/blog/${blog.id}`)}
-          onDeleteClick={() => showDeleteModal(blog)}
-          onEditClick={() => router.push(`/blog/edit/${blog.id}`)}
-        />
-      ))}
+      <h2 className="text-xl font-medium text-gray-600 text-center">
+        Your Blogs
+      </h2>
+      <p className="text-gray-500 text-sm text-center mb-4">
+        You can create, edit and delete whatever you want
+      </p>
+      <div className="flex flex-col gap-3">
+        {currentBlogs.map((blog) => (
+          <ProfileBlogCard
+            key={blog.id}
+            blog={blog}
+            onClick={() => router.push(`/blog/${blog.id}`)}
+            onDeleteClick={() => showDeleteModal(blog)}
+            onEditClick={() => router.push(`/blog/edit/${blog.id}`)}
+          />
+        ))}
+      </div>
       <div className="mt-10">
         <Paginate onPageChange={handlePageClick} pageCount={pageCount} />
       </div>
