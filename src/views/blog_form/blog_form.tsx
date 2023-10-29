@@ -127,7 +127,7 @@ const BlogForm: React.FC<Props> = ({ editableBlog }) => {
       ? URL.createObjectURL(uploadImage)
       : editableBlog?.coverImageUrl;
   return (
-    <div className="w-10/12 max-w-lg mx-auto mt-5 rounded p-5">
+    <div className="w-10/12 max-w-lg mx-auto mt-5 mb-10 rounded p-5">
       <h2 className="text-2xl sm:text-3xl font-bold text-gray-600 text-center mb-2">
         {isEditMode ? "Edit Blog" : "Create Blog"}
       </h2>
