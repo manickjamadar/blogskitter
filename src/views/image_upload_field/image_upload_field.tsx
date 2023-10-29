@@ -25,7 +25,7 @@ const ImageUploadField: React.FC<Props> = ({
               className="object-cover"
             />
           ) : (
-            <div className="w-full aspect-video border-2 border-slate-200 border-dashed flex flex-col justify-center items-center rounded gap-2">
+            <div className="w-full h-full border-2 border-slate-200 border-dashed flex flex-col justify-center items-center rounded gap-2">
               <div className="border border-blue-300 text-blue-400 bg-blue-100 px-6 py-1 rounded-full text-sm">
                 + Upload
               </div>
