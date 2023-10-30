@@ -11,7 +11,7 @@ interface Props {
 const SideBlogCard: React.FC<Props> = ({ blog, onClick }) => {
   return (
     <div
-      className="rounded cursor-pointer overflow-hidden flex shadow-sm hover:shadow-md hover:-translate-y-1 transition-all"
+      className="rounded-md cursor-pointer overflow-hidden flex shadow-sm hover:shadow-md hover:-translate-y-1 transition-all"
       onClick={onClick}
     >
       <div className="bg-gray-100 relative flex-1 aspect-video">

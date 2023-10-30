@@ -13,7 +13,7 @@ const BlogCard: React.FC<Props> = ({ blog, onClick }) => {
   return (
     <div
       onClick={onClick}
-      className="w-full cursor-pointer rounded overflow-hidden flex flex-col shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all"
+      className="w-full cursor-pointer rounded-md overflow-hidden flex flex-col shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all"
     >
       <div className="relative w-full aspect-video bg-gray-100">
         <RawImage

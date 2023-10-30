@@ -15,10 +15,10 @@ const FullBlogCard: React.FC<Props> = ({
   return (
     <div
       onClick={onClick}
-      className="bg-gray-100 rounded overflow-hidden w-full aspect-video bg-cover bg-center bg-no-repeat flex flex-col justify-end shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all cursor-pointer"
+      className="bg-gray-100 rounded-lg overflow-hidden w-full aspect-video bg-cover bg-center bg-no-repeat flex flex-col justify-end shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all cursor-pointer"
       style={{ backgroundImage: `url('${coverImageUrl}')` }}
     >
-      <div className="overflow-hidden rounded bg-gradient-to-b from-transparent to-black/60 text-white p-6 h-full w-full flex flex-col justify-end border">
+      <div className="overflow-hidden rounded-lg bg-gradient-to-b from-transparent to-black/60 text-white p-6 h-full w-full flex flex-col justify-end border">
         <div>
           <div
             className={`flex flex-col gap-1 ${showDetails ? "sm:mb-3" : ""}`}
